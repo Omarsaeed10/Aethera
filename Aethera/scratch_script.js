@@ -2604,7 +2604,7 @@ function renderMindMapD3Local(treeData, svgSelector) {
 
 PANES.settings = function(cont) {
   if (!APP.notionToken || APP.notionToken.length < 45) {
-    APP.notionToken = '';
+    APP.notionToken = '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';
     saveState();
   }
   if (!APP.notionDatabaseId || APP.notionDatabaseId.startsWith('ntn_') || APP.notionDatabaseId.startsWith('secret_')) {
@@ -2795,7 +2795,7 @@ window.testNotionConnection = async function() {
 
   // Auto-fix token if truncated or missing
   if (!currentToken || currentToken.length < 45) {
-    currentToken = '';
+    currentToken = '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';
   }
 
   // Auto-fix if Database ID is set to token or starts with ntn_
