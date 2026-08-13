@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Database (auto-created on first run)
+*.sqlite
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فتح تطبيق MindSpark / Aethera</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at top left, #1e1b4b, #0f172a, #020617);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f8fafc;
+            overflow: hidden;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px 30px;
+            width: 90%;
+            max-width: 480px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px rgba(99, 102, 241, 0.2);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .icon-container {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        h1 {
+            font-size: 26px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #818cf8, #c084fc, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            font-size: 15px;
+            color: #94a3b8;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .launch-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 16px 28px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.5);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .launch-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px -5px rgba(124, 58, 237, 0.7);
+            background: linear-gradient(135deg, #4338ca, #6d28d9);
+        }
+
+        .launch-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .status {
+            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #38bdf8;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #22c55e;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="icon-container">⚡</div>
+        <h1>Aethera / MindSpark</h1>
+        <p>منصة الذكاء الاصطناعي الأكاديمية الشاملة لطلاب الجامعة</p>
+        
+        <a href="http://localhost:34567" target="_blank" class="launch-btn" id="open-link">
+            <span>🚀 فتح التطبيق في المتصفح</span>
+        </a>
+
+        <div class="status">
+            <span class="dot"></span>
+            <span>السيرفر يعمل الآن على المحذى http://localhost:34567</span>
+        </div>
+    </div>
+
+    <script>
+        // Automatic redirection after 1.5 seconds if opened directly
+        setTimeout(() => {
+            window.location.href = "http://localhost:34567";
+        }, 1200);
+    </script>
+</body>
+</html>

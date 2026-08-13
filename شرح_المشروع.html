@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقرير مشروع التخرج - سفراء الذكاء الاصطناعي - عمر سعيد</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #09090e;
+            --card: #111122;
+            --border: #222244;
+            --gold: #f59e0b;
+            --primary: #7c3aed;
+            --secondary: #0d9488;
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* HEADER & CREDITS */
+        .header {
+            text-align: center;
+            border-bottom: 2px dashed var(--border);
+            padding-bottom: 40px;
+            margin-bottom: 40px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f59e0b, #e879f9, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--muted);
+            margin-bottom: 30px;
+        }
+
+        /* STUDENT INFO CARD */
+        .info-card {
+            background: rgba(124, 58, 237, 0.05);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 20px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            text-align: right;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .info-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        .info-val {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .info-val span {
+            color: var(--gold);
+        }
+
+        /* SECTIONS */
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.05rem;
+            color: var(--text);
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-right: 25px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        strong {
+            color: var(--gold);
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: right;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* SCREENSHOT PLACEHOLDER */
+        .screenshot-box {
+            background: #06060c;
+            border: 2px dashed var(--border);
+            border-radius: 16px;
+            padding: 40px 20px;
+            text-align: center;
+            margin: 30px 0 15px 0;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .screenshot-box:hover {
+            border-color: var(--primary);
+            background: rgba(124, 58, 237, 0.03);
+        }
+
+        .screenshot-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .screenshot-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .screenshot-desc {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .screenshot-caption {
+            background: rgba(13, 148, 136, 0.08);
+            border-right: 4px solid var(--secondary);
+            padding: 14px 20px;
+            border-radius: 4px 12px 12px 4px;
+            font-size: 0.95rem;
+            color: var(--text);
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .tech-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .tech-tag {
+            background: rgba(13, 148, 136, 0.1);
+            border: 1px solid rgba(13, 148, 136, 0.3);
+            color: #2dd4bf;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        /* PRINT STYLES */
+        @media print {
+            body {
+                background-color: var(--white);
+                color: #000000;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                background: none;
+            }
+
+            .container::before {
+                display: none;
+            }
+
+            .info-card {
+                background: #f1f5f9;
+                border: 1px solid #cbd5e1;
+                color: #000000;
+            }
+
+            .info-val, strong {
+                color: #000000 !important;
+            }
+
+            .info-val span {
+                color: #7c3aed !important;
+            }
+
+            h2 {
+                color: #7c3aed !important;
+                border-bottom: 2px solid #cbd5e1 !important;
+            }
+
+            table {
+                border: 1px solid #cbd5e1;
+                background: none;
+            }
+
+            th {
+                background: #f1f5f9 !important;
+                color: #000000 !important;
+                border-bottom: 2px solid #cbd5e1;
+            }
+
+            td {
+                border-bottom: 1px solid #e2e8f0;
+            }
+
+            .screenshot-box {
+                border: 2px dashed #94a3b8 !important;
+                background: #f8fafc !important;
+                page-break-inside: avoid;
+            }
+
+            .screenshot-caption {
+                background: #f0fdfa !important;
+                border-right: 4px solid #0d9488 !important;
+                color: #0f766e !important;
+                page-break-inside: avoid;
+            }
+
+            .tech-tag {
+                border: 1px solid #cbd5e1;
+                color: #0f766e;
+                background: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- HEADER -->
+    <header class="header">
+        <span class="badge">مشروع التخرج النهائي الأكاديمي</span>
+        <h1 class="title">MindSpark — University Edition</h1>
+        <p class="subtitle">منصة مساعد الدراسة الأكاديمي الشامل المدعوم بالذكاء الاصطناعي</p>
+        
+        <!-- STUDENT INFO -->
+        <div class="info-card">
+            <div class="info-item">
+                <span class="info-label">اسم المتدرب</span>
+                <span class="info-val">عمر سعيد محمد كامل</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">كود المتدرب</span>
+                <span class="info-val"><span>AI8 - G3 - 0543</span></span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">البرنامج التدريبي</span>
+                <span class="info-val">سفراء الذكاء الاصطناعي</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">الدفعة / المستوى</span>
+                <span class="info-val">الدفعة 8 / المستوى الأول</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 1 -->
+    <section>
+        <h2>تقديم عام عن المشروع</h2>
+        <p>
+            تعد منصة <strong>MindSpark — University Edition</strong> نظاماً أكاديمياً متكاملاً صُمم خصيصاً لمساعدة طلاب الجامعات في تنظيم وتبسيط دراستهم وتحسين إنتاجيتهم العلمية. تعتمد المنصة على نموذج الذكاء الاصطناعي الفائق <strong>Llama 3.3 70B Versatile</strong> المقدم بشكل مجاني فائق السرعة عبر سحابة <strong>Groq API</strong>.
+        </p>
+        <p>
+            تتميز المنصة بكونها تطبيق ويب وحيد الصفحة (Single Page Application) يعمل بالكامل من جانب العميل (Client-Side) بدون الحاجة إلى خوادم وسيطة أو قواعد بيانات معقدة، مما يضمن أقصى درجات الحماية لبيانات الطلاب ويوفر سرعة استجابة مذهلة لا تتجاوز بضع أجزاء من الثانية.
+        </p>
+    </section>
+
+    <!-- SECTION 2 -->
+    <section>
+        <h2>البنية التقنية والتقنيات المستخدمة</h2>
+        <div class="tech-tags">
+            <span class="tech-tag">Groq API Cloud</span>
+            <span class="tech-tag">Llama 3.3 70B</span>
+            <span class="tech-tag">HTML5 & Vanilla JS</span>
+            <span class="tech-tag">CSS3 HSL Variables</span>
+            <span class="tech-tag">PDF.js Text Extractor</span>
+            <span class="tech-tag">Web Speech API (TTS)</span>
+            <span class="tech-tag">LocalStorage Persistence</span>
+        </div>
+        <table style="margin-top:20px;">
+            <thead>
+                <tr>
+                    <th>المكون التقني</th>
+                    <th>الوظيفة والدور في المنصة</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Groq Cloud API</strong></td>
+                    <td>تأمين الاتصال الفوري بنموذج الذكاء الاصطناعي Llama 3.3 70B وتمرير المطالبات الأكاديمية بدقة.</td>
+                </tr>
+                <tr>
+                    <td><strong>PDF.js & DOCX Parser</strong></td>
+                    <td>استخلاص النصوص وتفريغ المحاضرات مباشرة من ملفات الطلاب الجامعية (PDF, TXT, DOCX) محلياً بالكامل.</td>
+                </tr>
+                <tr>
+                    <td><strong>Web Speech API</strong></td>
+                    <td>تحويل النصوص الأكاديمية إلى كلام منطوق بلهجات متعددة اعتماداً على محرك المتصفح الداخلي مجاناً.</td>
+                </tr>
+                <tr>
+                    <td><strong>LocalStorage</strong></td>
+                    <td>تخزين وحفظ تاريخ الاستعلامات والملاحظات السريعة العائمة وإحصائيات لوحة التحكم وتفضيلات اللغة محلياً.</td>
+                </tr>
+                <tr>
+                    <td><strong>Responsive Dark Theme</strong></td>
+                    <td>تصميم عصري جذاب يتميز بالوضوح البصري المريح للعين أثناء جلسات الدراسة الطويلة مع دعم كامل للاتجاهين (LTR & RTL).</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- SECTION 3 -->
+    <section>
+        <h2>أدوات المنصة الأكاديمية (17 أداة دراسية)</h2>
+        <p>
+            تم تزويد المنصة بـ 17 أداة مبتكرة مقسمة على 4 أقسام رئيسية لتغطية كافة جوانب الحياة الأكاديمية للطلاب:
+        </p>
+        
+        <h3>1. أدوات الدراسة الأكاديمية (Study Tools):</h3>
+        <ul>
+            <li><strong>الملخص الأكاديمي (Academic Summarizer):</strong> تلخيص المحاضرات والكتب العلمية بأربعة أساليب أكاديمية مختلفة (موجز، تفصيلي، نقد علمي، ملخص تنفيذي).</li>
+            <li><strong>منشئ أسئلة الامتحانات (Exam Question Generator):</strong> بناء أسئلة تحاكي الامتحانات الحقيقية (اختيار من متعدد، مقالي، قصير، صواب وخطأ، دراسة حالة) بـ 4 مستويات صعوبة مختلفة.</li>
+            <li><strong>الشرح المعمق للمفاهيم (Concept Deep Dive):</strong> تحليل أكاديمي للمصطلحات يشمل التعريف الإجرائي والمنظور التاريخي وأشهر العلماء والعلل الشائعة.</li>
+            <li><strong>مخطط الدراسة الذكي (Smart Study Planner):</strong> وضع جداول دراسية مخصصة زمنياً تعتمد على موعد الامتحان وساعات الدراسة اليومية وطرق التعلم المختلفة.</li>
+            <li><strong>مساعد المقالات الجامعية (Essay Assistant):</strong> اقتراح صياغات للأطروحة العلمية وبناء الهيكل التنظيمي للمقالات وعرض الحجج والردود المقابلة.</li>
+            <li><strong>منشئ الاستشهادات المرجعية (Citation Builder):</strong> توليد فوري للتوثيق المرجعي بـ 6 صيغ أكاديمية شهيرة مثل APA 7th و MLA 9th للمصادر المختلفة.</li>
+            <li><strong>المترجم الذكي (Smart Translator):</strong> ترجمة النصوص والمصطلحات الأكاديمية لـ 6 لغات مختلفة مع الحفاظ على النبرة والمصطلحات العلمية بدقة.</li>
+            <li><strong>النص المسموع (Text to Speech):</strong> محرك صوتي يقرأ الملخصات والمحتوى بصوت مسموع لتعزيز الحفظ البصري والسمعي المشترك.</li>
+            <li><strong>الاختبار السريع (Quick Quiz):</strong> توليد اختبارات تفاعلية تلقائية بالاعتماد على مخرجات الذكاء الاصطناعي بصيغة JSON مع التقييم الفوري وإظهار الإجابات الصحيحة والدرجة النهائية.</li>
+        </ul>
+
+        <h3 style="margin-top:20px;">2. الأدوات المتقدمة والإنتاجية (Advanced Tools):</h3>
+        <ul>
+            <li><strong>منشئ البطاقات التعليمية (Flashcard Generator):</strong> توليد بطاقات تفاعلية ذكية للمراجعة وحفظ التعريفات مع إمكانية خلط البطاقات ومتابعة التقدم.</li>
+            <li><strong>مخطط الخرائط الذهنية (Mind Map Visualizer):</strong> رسم خرائط ذهنية هرمية تفاعلية بصيغة SVG لتبسيط استيعاب بنية المفاهيم وتسهيل تذكرها.</li>
+            <li><strong>مساعد الأبحاث (Research Assistant):</strong> صياغة موجز بحثي شامل يغطي زوايا الطرح والمنهجيات المقترحة والنظريات المرتبطة بالموضوع.</li>
+            <li><strong>أداة المقارنة الثنائية (Compare Tool):</strong> مقارنة side-by-side للنظريات والكتب العلمية والمصطلحات مع توضيح الفروق الجوهرية ونقاط الالتقاء.</li>
+            <li><strong>مساعد المحادثة الذكي (AI Chat):</strong> شات بوت تفاعلي واعي بالسياق يقدم استشارات وحوارات تعليمية مستمرة حول أي تخصص.</li>
+            <li><strong>مؤقت بومودورو (Pomodoro Timer):</strong> مؤقت دراسة مدمج يساعد في زيادة التركيز بتقسيم الوقت (جلسة دراسة 25 دقيقة يتبعها استراحة قصيرة).</li>
+        </ul>
+
+        <h3 style="margin-top:20px;">3. السجلات والتحليلات (Analytics & Persistence):</h3>
+        <ul>
+            <li><strong>سجل المحفوظات (History System):</strong> أرشفة ذكية تحفظ مخرجات الطلاب وتتيح تصفحها ونسخها وحذفها عبر التخزين المحلي.</li>
+            <li><strong>لوحة المعلومات (Dashboard & Analytics):</strong> تتبع نشاط الدراسة الأسبوعي وعداد الأيام المتتالية واستخدام الأدوات بياناً بالرسوم والأعمدة التفاعلية.</li>
+        </ul>
+    </section>
+
+    <!-- SECTION 4 - DOCUMENTATION -->
+    <section>
+        <h2>توثيق خطوات العمل (الصور والشرح التفصيلي)</h2>
+        <p>
+            توضح الخطوات التالية طريقة عمل المنصة واستخدام أدوات الذكاء الاصطناعي مع توثيق واجهة التطبيق المميزة التي تم إضافة بيانات المتدرب <strong>عمر سعيد</strong> إليها:
+        </p>
+
+        <!-- STEP 1 -->
+        <div style="text-align: center; margin: 30px 0 15px 0;">
+            <img src="الصور/step1_main_ar.png" alt="الخطوة الأولى: واجهة التطبيق الرئيسية وتفعيل ملف التخرج الخاص بالمتدرب" style="max-width: 100%; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+        </div>
+        <div class="screenshot-caption">
+            <strong>شرح خطوة العمل الأولى:</strong> عند تشغيل التطبيق محلياً أو زيارته عبر رابط الاستضافة، تظهر الواجهة الداكنة الفاخرة المميزة. تظهر في أسفل القائمة الجانبية بطاقة خريج سفراء الذكاء الاصطناعي (Graduation Profile) المخصصة والتي تعرض اسم المتدرب: <strong>عمر سعيد</strong>، والكود الخاص به: <strong>AI8 - G3 - 0543</strong>، متبوعاً بدفعة البرنامج (Batch 8). كما يظهر التوقيع بالاسم والرمز في المذيل السفلي للمنصة. تدعم هذه الواجهة الترجمة الفورية الكاملة للغة العربية عند الضغط على زر التبديل الأعلى (🌐 AR) ليتحول الاتجاه كاملاً بالـ RTL بسلاسة تامة.
+        </div>
+
+        <!-- STEP 2 -->
+        <div style="text-align: center; margin: 30px 0 15px 0;">
+            <img src="الصور/step2_summarize.png" alt="الخطوة الثانية: أداة الملخص الأكاديمي ورفع ملفات الدراسة" style="max-width: 100%; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+        </div>
+        <div class="screenshot-caption">
+            <strong>شرح خطوة العمل الثانية:</strong> تتيح أداة <strong>Academic Summarizer</strong> للطلاب سحب وإفلات المحاضرات أو ملفات الكتب بصيغ متعددة. يقوم نظام الفحص المدمج المستند إلى مكتبة PDF.js باستخلاص النصوص بالكامل محلياً ثم إظهار حجم واسم الملف المرفوع. بعد تحديد نمط التلخيص (مثال: تلخيص تفصيلي Detailed Analysis) والنقر على "✨ Analyze & Summarize"، يظهر هيكل التلخيص الأكاديمي الرائع مقسماً لعناوين ونقاط واضحة ومنظمة، متبوعاً بأزرار النسخ التلقائي وحفظ النتيجة في السجل (Save) وتصديرها بصيغة PDF أو مستند Word.
+        </div>
+
+        <!-- STEP 3 -->
+        <div style="text-align: center; margin: 30px 0 15px 0;">
+            <img src="الصور/step3_quiz.png" alt="الخطوة الثالثة: اختبار سريع تفاعلي وتقييم فوري للنتائج" style="max-width: 100%; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+        </div>
+        <div class="screenshot-caption">
+            <strong>شرح خطوة العمل الثالثة:</strong> عند كتابة أي تخصص علمي (مثال: الذكاء الاصطناعي AIE111) في أداة <strong>Quick Quiz</strong>، يقوم الذكاء الاصطناعي بتوليد مجموعة من الأسئلة المتطابقة بصيغة JSON صارمة وفك تشفيرها وعرضها كبطاقات اختيار من متعدد تفاعلية وجذابة. يُظهر النظام تقييماً لحظياً ملوناً ومصحوباً برموز عند نقر الطالب للإجابة مع توفير شرح وتبرير للإجابة الصحيحة. وفي النهاية، يعرض التطبيق لوحة تلخيص ذكية ومحفزة للدرجة ونسبة التحصيل مع زر مخصص لإعادة المحاولة.
+        </div>
+
+        <!-- STEP 4 -->
+        <div style="text-align: center; margin: 30px 0 15px 0;">
+            <img src="الصور/step4_mindmap.png" alt="الخطوة الرابعة: أداة الخريطة الذهنية التفاعلية" style="max-width: 100%; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+        </div>
+        <div class="screenshot-caption">
+            <strong>شرح خطوة العمل الرابعة:</strong> تعالج أداة <strong>Mind Map Visualizer</strong> المفاهيم المعقدة بتحويلها إلى لوحات مرئية. يقوم النموذج الذكي بتحليل موضوع الاستعلام وبناء شجرة بيانات مهيكلة، والتي يقوم محرك التطبيق برسمها فورياً كعناصر ورسوم متجهة تفاعلية (SVG). تترابط الفروع المتناسقة بالخطوط وتتدرج الألوان حسب المستوى الهرمي للمفهوم مع إتاحة سكرول كامل واستجابة تامة عند تمرير الماوس، مما يساعد الطلاب على حفظ العلاقات البنيوية للمصطلحات بسهولة بالغة.
+        </div>
+
+        <!-- STEP 5 -->
+        <div style="text-align: center; margin: 30px 0 15px 0;">
+            <img src="الصور/step5_dashboard.png" alt="الخطوة الخامسة: المحادثة الذكية التفاعلية مع لوحة البيانات ومؤقت بومودورو" style="max-width: 100%; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+        </div>
+        <div class="screenshot-caption">
+            <strong>شرح خطوة العمل الخامسة:</strong> توثق هذه الخطوة شاشة المتابعة الإنتاجية للطلاب. يظهر في الجانب الأيسر مؤقت <strong>Pomodoro Timer</strong> التفاعلي قيد التشغيل مع رسم دائري SVG متناقص يتزامن مع ثواني التركيز، ويظهر في الجانب الأيمن أداة <strong>AI Chat</strong> للتحاور المستمر. كما تبرز لوحة التحليلات <strong>Dashboard</strong> إحصائيات دقيقة تحسب أيام المذاكرة المتتالية (Streak) والأدوات الأكثر استخداماً ومخطط الأعمدة البصري الأسبوعي الملون والذي يتغير ديناميكياً مع نشاط الطالب على المنصة.
+        </div>
+    </section>
+
+    <!-- SECTION 5 -->
+    <section>
+        <h2>خاتمة وتأكيد روابط التسليم</h2>
+        <p>
+            يمثل مشروع <strong>MindSpark — University Edition</strong> نموذجاً مثالياً للتطبيقات العملية الاحترافية التي تم دراستها في برنامج <strong>سفراء الذكاء الاصطناعي</strong>. يعكس المشروع مدى دمج تقنيات الذكاء الاصطناعي والقدرات التقنية المتقدمة لبناء تجربة تخدم المجتمع التعليمي بأسلوب مميز ورائع.
+        </p>
+        <p style="text-align:center; font-weight:700; color:var(--gold); border: 1px solid var(--border); padding:16px; border-radius:10px; background:rgba(245,158,11,0.02)">
+            الرابط المباشر للمشروع على منصة Netlify الاستضافة:<br>
+            <a href="https://mindsparkproo.netlify.app/" target="_blank" style="color:var(--secondary); text-decoration:none;">https://mindsparkproo.netlify.app/</a>
+        </p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="text-align:center; padding-top:20px; border-top:1px solid var(--border); color:var(--muted); font-size:0.8rem;">
+        مشروع التخرج لبرنامج سفراء الذكاء الاصطناعي - الدفعة الثامنة - عمر سعيد محمد كامل - كود AI8-G3-0543
+    </footer>
+</div>
+
+</body>
+</html>
