@@ -1,6 +1,6 @@
-# ⚡ Aethera — University Edition (مشروع سفراء الذكاء الاصطناعي)
+# ⚡ Aethera — AI Academic Assistant Platform
 
-> **منصة أكاديمية متكاملة تدعم الذكاء الاصطناعي للطلاب الجامعيين** — مدعومة بنموذج **Groq AI (Llama 3.3 70B)**، وتتضمن أكثر من 30 أداة دراسية، واجهة أنيقة Glassmorphic، وتكامل مباشر مع **Notion Sync**.
+> **A comprehensive AI-powered academic suite built for university students** — Driven by **Groq AI (Llama 3.3 70B)**, featuring 30+ study tools, a modern Glassmorphism interface, offline capabilities, and direct **Notion Sync** integration.
 
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Omarsaeed10%2Fsofraa-181717?style=flat&logo=github)](https://github.com/Omarsaeed10/sofraa)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-mindsparkproo.netlify.app-00C7B7?style=flat&logo=netlify)](https://mindsparkproo.netlify.app/)
@@ -9,79 +9,80 @@
 
 ---
 
-## 🎓 معلومات مشروع التخرج (Graduation Profile)
+## 🎓 Graduation Project Profile
 
-مشروع تخرج مقدم لبرنامج **سفراء الذكاء الاصطناعي (المستوى الأول) - الدفعة الثامنة**:
-* **اسم الطالب:** عمر سعيد محمد كامل (Omar Saeed Mohamed Kamel)
-* **كود الطالب:** `AI8 - G3 - 0543`
-* **رابط العرض المباشر (Live Demo):** [mindsparkproo.netlify.app](https://mindsparkproo.netlify.app/)
-* **مستودع الكود (GitHub):** [https://github.com/Omarsaeed10/sofraa](https://github.com/Omarsaeed10/sofraa)
+This project was developed as a graduation requirement for the **AI Ambassadors Program (Level 1) - Batch 8**:
 
----
-
-## 📁 هيكلية المشروع (Project Structure)
-
-يحتوي المستودع على نسختين رئيسيتين للمشروع:
-
-1. **النسخة السريعة (Standalone SPA Edition - Root Directory):**
-   * تعمل عبر ملف أحادي `index.html` دون الحاجة لأي خادم أو تثبيت (Zero Setup).
-   * تحتوي على 17 أداة أكاديمية تعمل مباشرة في المتصفح.
-
-2. **النسخة الكاملة (Full-Stack PWA Edition - [Aethera/](./Aethera/)):**
-   * تطبيق أكاديمي متكامل يضم 30+ أداة دراسية.
-   * خادم خلفي Node.js + Express.
-   * قواعد بيانات SQLite و PostgreSQL / Supabase.
-   * ربط وتزامن تلقائي مع **Notion (Notion Sync API)**.
+* **Student Name:** Omar Saeed Mohamed Kamel
+* **Student Code:** `AI8 - G3 - 0543`
+* **Live Demo:** [mindsparkproo.netlify.app](https://mindsparkproo.netlify.app/)
+* **GitHub Repository:** [github.com/Omarsaeed10/sofraa](https://github.com/Omarsaeed10/sofraa)
 
 ---
 
-## 🎯 الأدوات والخصائص (30+ Academic Tools)
+## 📁 Repository Structure & Editions
 
-### 📚 أدوات الدراسة والملخصات (Study Tools)
-* 📝 **تلخيص الأبحاث والمحاضرات (Academic Summarizer):** ملخصات قصيرة، تفصيلية، مراجعة نقدية، أو ملخص تنفيذي مع دعم التصدير لـ Notion.
-* ❓ **مولد أسئلة الامتحانات (Exam Question Generator):** أسئلة اختيار من متعدد، مقالية، صح/خطأ، وحالات دراسية مع تحديد مستوى الصعوبة.
-* 💡 **الشرح العميق للمفاهيم (Concept Deep Dive):** تعريفات، نظريات، تاريخ، أشهر العلماء، والتطبيقات العملية.
-* 📅 **مخطط الدراسة الذكي (Smart Study Planner):** جداول بومودورو، التكرار المتباعد (Spaced Repetition)، والمراجعة المكثفة.
-* ✍️ **مساعد كتابة المقالات (Essay Assistant):** صياغة الفرضيات، الهيكل العام، الحجج والدلائل، والحجج المضادة.
-* 📖 **مولد المراجع والأوثاق (Citation Builder):** صيغ APA 7th, MLA 9th, Chicago, Harvard, IEEE, Vancouver.
-* 🌍 **المترجم الأكاديمي الذكي (Smart Translator):** ترجمة سياقية مع حفظ المصطلحات.
-* 🎧 **القارئ الصوتي (Text to Speech):** تحويل النصوص إلى كلام منطوق مع التحكم في السرعة والصوت.
+This repository houses two distinct editions of the platform:
 
-### 🧠 التعلم التفاعلي والذكاء الاصطناعي (Advanced AI & Interactive Learning)
-* 🧠 **بطاقات الاستذكار (Flashcards Generator):** بطاقات تفاعلية مع إمكانية التصدير لتطبيق Anki.
-* 🗺️ **الخرائط الذهنية (Mind Map Visualizer):** رسم خرائط ذهنية تفاعلية بصيغة SVG.
-* 🔍 **مساعد الأبحاث (Research Assistant):** خطط ومصادر الأبحاث والأوراق العلمية.
-* 🔄 **أداة المقارنة (Concept Compare):** مقارنة تحليلية بين مفهومين أو نظريتين.
-* 🤖 **الشات الأكاديمي (AI Chat):** محادثة ذكية متخصصة تفهم السياق الأكاديمي.
-* 🎓 **حاسبة المعدل التراكمي (GPA Calculator):** حساب وتوقع المعدل مع التحكم في الفصول الدراسية (`+ Semester` / `- Semester`).
-* 🔌 **تكامل Notion Sync:** تصدير الملاحظات مباشرة إلى قاعدة بيانات Notion الخاصة بك بضغطة زر.
+1. **Standalone SPA Edition (Root Directory):**
+   * Operates completely client-side via a single file (`index.html`) with zero installation needed.
+   * Includes 17 essential academic tools running directly in the browser.
+
+2. **Full-Stack PWA Edition ([Aethera/](./Aethera/)):**
+   * Comprehensive full-stack application featuring 30+ academic tools.
+   * Powered by a **Node.js + Express** REST API backend.
+   * Dual database support: local **SQLite** & **PostgreSQL / Supabase** schemas.
+   * Direct **Notion API Integration (Notion Sync)** for auto-exporting study notes.
 
 ---
 
-## 🚀 طريقة التشغيل والاستخدام (Getting Started)
+## 🎯 Features & Academic Toolkit (30+ Tools)
 
-### 1️⃣ التشغيل المباشر (Standalone Single Page App):
-1. افتح ملف [`index.html`](./index.html) في أي متصفح.
-2. أدخل مفتاح **Groq API Key** من زر الإعدادات (يمكنك الحصول عليه مجاناً من [console.groq.com](https://console.groq.com)).
-3. اختر الأداة وابدأ الاستخدام فوراً!
+### 📚 Study & Synthesis Tools
+* 📝 **Academic Summarizer:** Generate brief, detailed, critical review, or executive summaries with one-click **Notion Sync**.
+* ❓ **Exam Question Generator:** Multiple-choice (MCQ), essay, short answer, true/false, and case studies with customizable difficulty levels.
+* 💡 **Concept Deep Dive:** Comprehensive breakdown including definitions, foundational theories, historical context, key scholars, applications, and misconceptions.
+* 📅 **Smart Study Planner:** Customized schedules using Pomodoro, Spaced Repetition, or intensive exam review modes.
+* ✍️ **Essay Assistant:** Thesis generator, structural outlines, argument formulation, counterarguments, and writing tips.
+* 📖 **Citation Builder:** Instant reference generator supporting APA 7th, MLA 9th, Chicago, Harvard, IEEE, and Vancouver styles.
+* 🌍 **Smart Academic Translator:** Context-aware translation across 6 languages with register tuning.
+* 🎧 **Text-to-Speech (TTS):** Browser-native audio reading with speed, pitch, and voice controls.
 
-### 2️⃣ تشغيل النسخة الكاملة (Full-Stack Edition):
+### 🧠 Interactive Learning & Advanced AI
+* 🧠 **Flashcard Generator:** Interactive flip-cards with review tracking and export options for **Anki**.
+* 🗺️ **Mind Map Visualizer:** Interactive SVG concept maps generated on the fly.
+* 🔍 **Research Assistant:** Structured research briefs covering literature angles, methodology, and theoretical frameworks.
+* 🔄 **Concept Compare:** Side-by-side analytical comparisons of two theories, systems, or concepts.
+* 🤖 **Academic AI Chat:** Context-aware assistant dedicated to answering complex course questions.
+* 🎓 **GPA Calculator:** Multi-semester GPA calculator and projector with dynamic semester controls (`+ Semester` / `- Semester`).
+* 🔌 **Notion Sync Integration:** Export study outputs directly into your Notion workspace database with real-time connection verification.
+
+---
+
+## 🚀 Quick Start Guide
+
+### 1️⃣ Standalone Mode (Zero Setup)
+1. Open [`index.html`](./index.html) directly in any modern web browser.
+2. Click **🔑 Groq API Key** in the sidebar to enter your key (obtain a free key at [console.groq.com](https://console.groq.com)).
+3. Select any tool and start learning immediately.
+
+### 2️⃣ Full-Stack Mode (Backend Setup)
 ```bash
-# 1. استنساخ المستودع
+# Clone the repository
 git clone https://github.com/Omarsaeed10/sofraa.git
 
-# 2. الانتقال لمجلد الباك إند
+# Navigate to the backend directory
 cd sofraa/Aethera/backend
 
-# 3. تثبيت المكتبات
+# Install dependencies
 npm install
 
-# 4. تشغيل الخادم المحلي (يعمل على http://localhost:34567)
+# Start the local backend server (Runs on http://localhost:34567)
 npm start
 ```
 
 ---
 
-## 🛡️ الترخيص والحقوق (License)
+## 🛡️ License
 
-هذا المشروع مفتوح المصدر للاستخدام التعليمي، تم تطويره بواسطة **عمر سعيد (Omar Saeed)** ضمن برنامج **سفراء الذكاء الاصطناعي (الدفعة الثامنة)**.
+Created by **Omar Saeed** for the **AI Ambassadors Program (Batch 8)**. Free for educational and non-commercial use under the MIT License.
