@@ -112,10 +112,10 @@ Easily export any generated summary or study note directly to your Notion worksp
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/omarsaeed/sofraa.git
+git clone https://github.com/Omarsaeed10/sofraa.git
 
 # Navigate to backend directory
-cd MindSpark/backend
+cd Aethera/backend
 
 # Install dependencies
 npm install
