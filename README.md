@@ -3,19 +3,14 @@
 > **A comprehensive AI-powered academic suite built for university students** — Driven by **Groq AI (Llama 3.3 70B)**, featuring 30+ study tools, a modern Glassmorphism interface, offline capabilities, and direct **Notion Sync** integration.
 
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Omarsaeed10%2Fsofraa-181717?style=flat&logo=github)](https://github.com/Omarsaeed10/sofraa)
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-mindsparkproo.netlify.app-00C7B7?style=flat&logo=netlify)](https://mindsparkproo.netlify.app/)
 [![License: Free for Education](https://img.shields.io/badge/License-Free%20for%20Education-7c3aed)](#-license)
 [![AI Engine](https://img.shields.io/badge/AI-Groq%20Llama%203.3%2070B-f55036?logo=groq)](https://groq.com/)
 
 ---
 
-## 🎓 Graduation Project Profile
+## 👤 Developer Profile
 
-This project was developed as a graduation requirement for the **AI Ambassadors Program (Level 1) - Batch 8**:
-
-* **Student Name:** Omar Saeed Mohamed Kamel
-* **Student Code:** `AI8 - G3 - 0543`
-* **Live Demo:** [mindsparkproo.netlify.app](https://mindsparkproo.netlify.app/)
+* **Developer Name:** Omar Saeed
 * **GitHub Repository:** [github.com/Omarsaeed10/sofraa](https://github.com/Omarsaeed10/sofraa)
 
 ---
@@ -63,7 +58,7 @@ This repository houses two distinct editions of the platform:
 
 ### 1️⃣ Standalone Mode (Zero Setup)
 1. Open [`index.html`](./index.html) directly in any modern web browser.
-2. Click **🔑 Groq API Key** in the sidebar to enter your key (obtain a free key at [console.groq.com](https://console.groq.com)).
+2. Click **🔑 Groq API Key** in the sidebar to enter your key (obtain a free key at [consolegroq.com](https://console.groq.com)).
 3. Select any tool and start learning immediately.
 
 ### 2️⃣ Full-Stack Mode (Backend Setup)
@@ -85,4 +80,4 @@ npm start
 
 ## 🛡️ License
 
-Created by **Omar Saeed** for the **AI Ambassadors Program (Batch 8)**. Free for educational and non-commercial use under the MIT License.
+Created by **Omar Saeed**. Free for educational and non-commercial use under the MIT License.
