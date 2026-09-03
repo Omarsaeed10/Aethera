@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  .wrapper {
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 15px;
+    width: 100%;
+    max-width: 1050px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-bottom: 4px;
+    text-align: left;
+  }
+  .desc {
+    font-size: 13px;
+    color: #334155;
+    margin-bottom: 12px;
+    text-align: left;
+    font-weight: 500;
+  }
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+
+</head>
+<body>
+  <div class="wrapper">
+    <div class="title">[8] Class Diagram</div>
+    <div class="desc">Object-oriented structural design detailing class attributes, methods, visibility, and associations.</div>
+    <svg viewBox="0 0 950 620" xmlns="http://www.w3.org/2000/svg">
+          <!-- Class 1: AppController -->
+          <rect x="360" y="30" width="230" height="170" rx="6" fill="#f8fafc" stroke="#2563eb" stroke-width="2" />
+          <rect x="360" y="30" width="230" height="30" fill="#1e3a8a" />
+          <text x="475" y="50" text-anchor="middle" fill="#ffffff" font-weight="bold" font-size="13">AppController</text>
+          <text x="370" y="80" fill="#0f172a" font-size="11" font-weight="600">- activeTool: String</text>
+          <text x="370" y="98" fill="#0f172a" font-size="11" font-weight="600">- currentTheme: String</text>
+          <line x1="360" y1="110" x2="590" y2="110" stroke="#cbd5e1" />
+          <text x="370" y="130" fill="#0f172a" font-size="11" font-weight="bold">+ init(): void</text>
+          <text x="370" y="148" fill="#0f172a" font-size="11" font-weight="bold">+ switchTab(tabId): void</text>
+          <text x="370" y="166" fill="#0f172a" font-size="11" font-weight="bold">+ handleToolSubmit(): void</text>
+
+          <!-- Class 2: GroqAIService -->
+          <rect x="60" y="270" width="220" height="170" rx="6" fill="#f8fafc" stroke="#6d28d9" stroke-width="2" />
+          <rect x="60" y="270" width="220" height="30" fill="#4c1d95" />
+          <text x="170" y="290" text-anchor="middle" fill="#ffffff" font-weight="bold" font-size="13">GroqAIService</text>
+          <text x="70" y="320" fill="#0f172a" font-size="11" font-weight="600">- apiKey: String</text>
+          <text x="70" y="338" fill="#0f172a" font-size="11" font-weight="600">- modelName: String</text>
+          <line x1="60" y1="350" x2="280" y2="350" stroke="#cbd5e1" />
+          <text x="70" y="370" fill="#0f172a" font-size="11" font-weight="bold">+ query(prompt): Promise</text>
+          <text x="70" y="388" fill="#0f172a" font-size="11" font-weight="bold">+ streamResponse(): Stream</text>
+          <text x="70" y="406" fill="#0f172a" font-size="11" font-weight="bold">+ validateKey(): Boolean</text>
+
+          <!-- Class 3: DocumentParser -->
+          <rect x="360" y="270" width="230" height="170" rx="6" fill="#f8fafc" stroke="#0891b2" stroke-width="2" />
+          <rect x="360" y="270" width="230" height="30" fill="#164e63" />
+          <text x="475" y="290" text-anchor="middle" fill="#ffffff" font-weight="bold" font-size="13">DocumentParser</text>
+          <text x="370" y="320" fill="#0f172a" font-size="11" font-weight="600">- supportedTypes: Array</text>
+          <line x1="360" y1="340" x2="590" y2="340" stroke="#cbd5e1" />
+          <text x="370" y="360" fill="#0f172a" font-size="11" font-weight="bold">+ parsePDF(file): String</text>
+          <text x="370" y="378" fill="#0f172a" font-size="11" font-weight="bold">+ parseDocx(file): String</text>
+          <text x="370" y="396" fill="#0f172a" font-size="11" font-weight="bold">+ parseTxt(file): String</text>
+
+          <!-- Class 4: StorageManager -->
+          <rect x="670" y="270" width="220" height="170" rx="6" fill="#f8fafc" stroke="#d97706" stroke-width="2" />
+          <rect x="670" y="270" width="220" height="30" fill="#78350f" />
+          <text x="780" y="290" text-anchor="middle" fill="#ffffff" font-weight="bold" font-size="13">StorageManager</text>
+          <text x="680" y="320" fill="#0f172a" font-size="11" font-weight="600">- dbInstance: Database</text>
+          <line x1="670" y1="340" x2="890" y2="340" stroke="#cbd5e1" />
+          <text x="680" y="360" fill="#0f172a" font-size="11" font-weight="bold">+ saveNote(record): void</text>
+          <text x="680" y="378" fill="#0f172a" font-size="11" font-weight="bold">+ getHistory(): Array</text>
+          <text x="680" y="396" fill="#0f172a" font-size="11" font-weight="bold">+ clearHistory(): void</text>
+
+          <!-- Connections AppController -> Subclasses -->
+          <line x1="475" y1="200" x2="170" y2="270" stroke="#2563eb" stroke-width="2" />
+          <line x1="475" y1="200" x2="475" y2="270" stroke="#2563eb" stroke-width="2" />
+          <line x1="475" y1="200" x2="780" y2="270" stroke="#2563eb" stroke-width="2" />
+        </svg>
+  </div>
+</body>
+</html>

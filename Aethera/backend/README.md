@@ -1,6 +1,6 @@
-# MindSpark Backend
+# Aethera Backend
 
-This is the backend service for MindSpark University Edition, providing authentication, profile management, and device syncing.
+This is the backend service for Aethera (University Edition), providing authentication, profile management, and device syncing.
 
 ## Tech Stack
 - **Node.js** & **Express**
@@ -32,7 +32,7 @@ This is the backend service for MindSpark University Edition, providing authenti
      - `SMTP_PORT`: Port for SMTP connection (default: `587`).
      - `SMTP_USER`: SMTP username.
      - `SMTP_PASS`: SMTP password.
-     - `SMTP_FROM`: Sender address/name for SMTP (default: `"MindSpark" <no-reply@mindspark.edu>`).
+     - `SMTP_FROM`: Sender address/name for SMTP (default: `"Aethera" <no-reply@aethera.edu>`).
    
    *Note: If no email settings are configured, verification emails/codes will be logged to the server console in development.*
 
@@ -42,7 +42,7 @@ This is the backend service for MindSpark University Edition, providing authenti
    ```
 
    The server will start on `http://localhost:34567`.
-   The SQLite database (`mindspark.sqlite`) will be automatically created on first run in this directory.
+   The SQLite database (`aethera.sqlite`) will be automatically created on first run in this directory.
 
 ## API Endpoints
 

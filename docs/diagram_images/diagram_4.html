@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  .wrapper {
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 15px;
+    width: 100%;
+    max-width: 1050px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-bottom: 4px;
+    text-align: left;
+  }
+  .desc {
+    font-size: 13px;
+    color: #334155;
+    margin-bottom: 12px;
+    text-align: left;
+    font-weight: 500;
+  }
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+
+</head>
+<body>
+  <div class="wrapper">
+    <div class="title">[4] Sequence Diagram</div>
+    <div class="desc">Sequence of object interactions and message exchanges across system components during prompt processing.</div>
+    <svg viewBox="0 0 900 550" xmlns="http://www.w3.org/2000/svg">
+          <!-- Lifeline Headers -->
+          <rect x="40" y="30" width="120" height="40" rx="6" fill="#e0e7ff" stroke="#4338ca" stroke-width="2" />
+          <text x="100" y="55" text-anchor="middle" fill="#1e1b4b" font-size="13" font-weight="bold">Student UI</text>
+
+          <rect x="230" y="30" width="130" height="40" rx="6" fill="#f1f5f9" stroke="#2563eb" stroke-width="2" />
+          <text x="295" y="55" text-anchor="middle" fill="#1e3a8a" font-size="13" font-weight="bold">AppController</text>
+
+          <rect x="430" y="30" width="130" height="40" rx="6" fill="#ede9fe" stroke="#6d28d9" stroke-width="2" />
+          <text x="495" y="55" text-anchor="middle" fill="#312e81" font-size="13" font-weight="bold">GroqAIService</text>
+
+          <rect x="630" y="30" width="110" height="40" rx="6" fill="#d1fae5" stroke="#059669" stroke-width="2" />
+          <text x="685" y="55" text-anchor="middle" fill="#064e3b" font-size="13" font-weight="bold">NotionSync</text>
+
+          <rect x="780" y="30" width="100" height="40" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+          <text x="830" y="55" text-anchor="middle" fill="#451a03" font-size="13" font-weight="bold">LocalStore</text>
+
+          <!-- Dashed Lifelines -->
+          <line x1="100" y1="70" x2="100" y2="510" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5" />
+          <line x1="295" y1="70" x2="295" y2="510" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5" />
+          <line x1="495" y1="70" x2="495" y2="510" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5" />
+          <line x1="685" y1="70" x2="685" y2="510" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5" />
+          <line x1="830" y1="70" x2="830" y2="510" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5" />
+
+          <!-- Messages -->
+          <line x1="100" y1="110" x2="295" y2="110" stroke="#4338ca" stroke-width="2" />
+          <polygon points="295,110 285,105 285,115" fill="#4338ca" />
+          <text x="197" y="100" text-anchor="middle" fill="#1e1b4b" font-size="11" font-weight="bold">1: generateSummary(text, options)</text>
+
+          <line x1="295" y1="160" x2="495" y2="160" stroke="#2563eb" stroke-width="2" />
+          <polygon points="495,160 485,155 485,165" fill="#2563eb" />
+          <text x="395" y="150" text-anchor="middle" fill="#1e3a8a" font-size="11" font-weight="bold">2: queryLlama3(prompt, apiKey)</text>
+
+          <line x1="495" y1="220" x2="295" y2="220" stroke="#6d28d9" stroke-width="2" stroke-dasharray="4,4" />
+          <polygon points="295,220 305,215 305,225" fill="#6d28d9" />
+          <text x="395" y="210" text-anchor="middle" fill="#312e81" font-size="11" font-weight="bold">3: streamMarkdownResponse()</text>
+
+          <line x1="295" y1="280" x2="830" y2="280" stroke="#d97706" stroke-width="2" />
+          <polygon points="830,280 820,275 820,285" fill="#d97706" />
+          <text x="560" y="270" text-anchor="middle" fill="#451a03" font-size="11" font-weight="bold">4: saveToHistory(recordData)</text>
+
+          <line x1="295" y1="340" x2="100" y2="340" stroke="#2563eb" stroke-width="2" stroke-dasharray="4,4" />
+          <polygon points="100,340 110,335 110,345" fill="#2563eb" />
+          <text x="197" y="330" text-anchor="middle" fill="#1e3a8a" font-size="11" font-weight="bold">5: renderFormattedOutput(DOM)</text>
+
+          <line x1="100" y1="410" x2="685" y2="410" stroke="#059669" stroke-width="2" />
+          <polygon points="685,410 675,405 675,415" fill="#059669" />
+          <text x="390" y="400" text-anchor="middle" fill="#064e3b" font-size="11" font-weight="bold">6: syncToNotionWorkspace(payload)</text>
+
+          <line x1="685" y1="470" x2="100" y2="470" stroke="#059669" stroke-width="2" stroke-dasharray="4,4" />
+          <polygon points="100,470 110,465 110,475" fill="#059669" />
+          <text x="390" y="460" text-anchor="middle" fill="#064e3b" font-size="11" font-weight="bold">7: returnSuccessToast(pageUrl)</text>
+        </svg>
+  </div>
+</body>
+</html>

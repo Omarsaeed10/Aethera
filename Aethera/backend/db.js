@@ -1,7 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
-const dbPath = path.resolve(__dirname, 'mindspark.sqlite');
+const dbPath = path.resolve(__dirname, 'aethera.sqlite');
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Error opening database:', err.message);
@@ -292,6 +292,131 @@ function initDb() {
     )`);
 
 
+
+    // ── ENTERPRISE & MULTI-TENANCY EDTECH TABLES ──
+
+    // 1. Universities & Educational Institutions
+    db.run(`CREATE TABLE IF NOT EXISTS institutions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      domain TEXT UNIQUE,
+      country TEXT DEFAULT 'Egypt',
+      tier TEXT DEFAULT 'campus_enterprise',
+      seats_total INTEGER DEFAULT 5000,
+      seats_used INTEGER DEFAULT 0,
+      license_key TEXT UNIQUE NOT NULL,
+      logo_url TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`);
+
+    // 2. Institution Members & Role Assignments (Student / Instructor / Dean / Admin)
+    db.run(`CREATE TABLE IF NOT EXISTS institution_members (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      institution_id INTEGER NOT NULL,
+      user_id INTEGER NOT NULL,
+      role TEXT NOT NULL DEFAULT 'student',
+      department TEXT DEFAULT 'Computer Science',
+      status TEXT DEFAULT 'active',
+      joined_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY(institution_id) REFERENCES institutions(id) ON DELETE CASCADE,
+      FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+    )`);
+
+    // 3. Enterprise Site Licenses
+    db.run(`CREATE TABLE IF NOT EXISTS enterprise_licenses (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      institution_id INTEGER NOT NULL,
+      license_key TEXT UNIQUE NOT NULL,
+      plan_name TEXT DEFAULT 'Campus Unlimited AI',
+      max_seats INTEGER DEFAULT 10000,
+      issued_date TEXT,
+      expires_at TEXT,
+      is_active INTEGER DEFAULT 1,
+      contact_email TEXT,
+      FOREIGN KEY(institution_id) REFERENCES institutions(id) ON DELETE CASCADE
+    )`);
+
+    // 4. Instructor Academic Classes & Cohorts
+    db.run(`CREATE TABLE IF NOT EXISTS instructor_classes (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      institution_id INTEGER,
+      instructor_id INTEGER NOT NULL,
+      class_name TEXT NOT NULL,
+      course_code TEXT NOT NULL,
+      department TEXT DEFAULT 'Engineering',
+      semester TEXT DEFAULT 'Fall 2026',
+      syllabus_text TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY(instructor_id) REFERENCES users(id) ON DELETE CASCADE
+    )`);
+
+    // 5. Class Rosters (Enrolled Students per Class)
+    db.run(`CREATE TABLE IF NOT EXISTS class_roster (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      class_id INTEGER NOT NULL,
+      student_id INTEGER,
+      student_name TEXT NOT NULL,
+      student_email TEXT NOT NULL,
+      enrolled_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY(class_id) REFERENCES instructor_classes(id) ON DELETE CASCADE
+    )`);
+
+    // 6. Class Assignments & Exam Tasks
+    db.run(`CREATE TABLE IF NOT EXISTS class_assignments (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      class_id INTEGER NOT NULL,
+      title TEXT NOT NULL,
+      prompt TEXT NOT NULL,
+      rubric_json TEXT DEFAULT '{}',
+      max_score INTEGER DEFAULT 100,
+      due_date TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY(class_id) REFERENCES instructor_classes(id) ON DELETE CASCADE
+    )`);
+
+    // 7. Student Submissions & Batch AI Automated Grading
+    db.run(`CREATE TABLE IF NOT EXISTS class_submissions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      assignment_id INTEGER NOT NULL,
+      student_id INTEGER,
+      student_name TEXT NOT NULL,
+      submission_text TEXT NOT NULL,
+      score INTEGER DEFAULT 0,
+      letter_grade TEXT DEFAULT 'Pending',
+      ai_feedback_json TEXT DEFAULT '{}',
+      plagiarism_score REAL DEFAULT 0.0,
+      ai_likelihood REAL DEFAULT 0.0,
+      status TEXT DEFAULT 'graded',
+      graded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY(assignment_id) REFERENCES class_assignments(id) ON DELETE CASCADE
+    )`);
+
+    // 8. LMS Interoperability & Export Logs (Canvas, Moodle, Blackboard)
+    db.run(`CREATE TABLE IF NOT EXISTS lms_exports (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      tool_name TEXT NOT NULL,
+      lms_type TEXT NOT NULL,
+      export_title TEXT NOT NULL,
+      payload_json TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+    )`);
+
+    // Seed sample Enterprise Universities if none exist
+    db.get('SELECT COUNT(*) as count FROM institutions', (err, row) => {
+      if (!err && row && row.count === 0) {
+        db.run(`INSERT INTO institutions (name, domain, country, tier, seats_total, seats_used, license_key)
+          VALUES 
+          ('Cairo University — Faculty of Engineering', 'eng.cu.edu.eg', 'Egypt', 'campus_enterprise', 12000, 4820, 'AETH-CAMPUS-2026-CAIRO-ENG'),
+          ('King Saud University — College of Computer Science', 'ccis.ksu.edu.sa', 'Saudi Arabia', 'campus_enterprise', 8500, 3140, 'AETH-CAMPUS-2026-KSU-CCIS'),
+          ('MIT — Department of EECS', 'eecs.mit.edu', 'United States', 'campus_enterprise', 5000, 2490, 'AETH-CAMPUS-2026-MIT-EECS')
+        `, (seedErr) => {
+          if (!seedErr) console.log('🏛️ Initial Enterprise University Institutions seeded successfully.');
+        });
+      }
+    });
 
     // Dynamic schema migrations for existing databases
     db.all("PRAGMA table_info(users)", (err, columns) => {

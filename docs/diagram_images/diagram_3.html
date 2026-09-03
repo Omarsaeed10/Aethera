@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  .wrapper {
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 15px;
+    width: 100%;
+    max-width: 1050px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-bottom: 4px;
+    text-align: left;
+  }
+  .desc {
+    font-size: 13px;
+    color: #334155;
+    margin-bottom: 12px;
+    text-align: left;
+    font-weight: 500;
+  }
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+
+</head>
+<body>
+  <div class="wrapper">
+    <div class="title">[3] Activity Diagram</div>
+    <div class="desc">Demonstrates procedural workflow execution from user submission to parsing, API stream processing, and history persistence.</div>
+    <svg viewBox="0 0 850 680" xmlns="http://www.w3.org/2000/svg">
+          <!-- Start Node -->
+          <circle cx="425" cy="40" r="14" fill="#059669" />
+          <line x1="425" y1="54" x2="425" y2="90" stroke="#475569" stroke-width="2" />
+
+          <!-- Action 1: Select Tool -->
+          <rect x="335" y="90" width="180" height="45" rx="8" fill="#e0e7ff" stroke="#2563eb" stroke-width="2" />
+          <text x="425" y="117" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="bold">Select Tool &amp; Enter Input</text>
+          <line x1="425" y1="135" x2="425" y2="175" stroke="#475569" stroke-width="2" />
+
+          <!-- Decision 1: Has File? -->
+          <polygon points="425,175 485,205 425,235 365,205" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+          <text x="425" y="209" text-anchor="middle" fill="#451a03" font-size="11" font-weight="bold">Has File?</text>
+
+          <!-- Branch Yes -->
+          <line x1="365" y1="205" x2="250" y2="205" stroke="#d97706" stroke-width="2" />
+          <text x="310" y="195" fill="#78350f" font-size="11" font-weight="bold">Yes [PDF/Doc]</text>
+          <rect x="150" y="182" width="140" height="45" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+          <text x="220" y="209" text-anchor="middle" fill="#451a03" font-size="12" font-weight="bold">Extract Local Text</text>
+
+          <line x1="220" y1="227" x2="220" y2="280" stroke="#d97706" stroke-width="2" />
+          <line x1="220" y1="280" x2="425" y2="280" stroke="#475569" stroke-width="2" />
+
+          <!-- Branch No -->
+          <line x1="425" y1="235" x2="425" y2="280" stroke="#d97706" stroke-width="2" />
+          <text x="435" y="255" fill="#78350f" font-size="11" font-weight="bold">No [Raw Text]</text>
+
+          <line x1="425" y1="280" x2="425" y2="315" stroke="#475569" stroke-width="2" />
+
+          <!-- Action 2: Validate API Key -->
+          <rect x="335" y="315" width="180" height="45" rx="8" fill="#ede9fe" stroke="#6d28d9" stroke-width="2" />
+          <text x="425" y="342" text-anchor="middle" fill="#312e81" font-size="13" font-weight="bold">Validate Groq API Key</text>
+          <line x1="425" y1="360" x2="425" y2="400" stroke="#475569" stroke-width="2" />
+
+          <!-- Action 3: Stream Groq Request -->
+          <rect x="320" y="400" width="210" height="50" rx="8" fill="#ddd6fe" stroke="#6d28d9" stroke-width="2" />
+          <text x="425" y="422" text-anchor="middle" fill="#1e1b4b" font-size="13" font-weight="bold">Send Llama 3.3 Prompt</text>
+          <text x="425" y="440" text-anchor="middle" fill="#312e81" font-size="11" font-weight="bold">Stream Tokens via Groq Cloud</text>
+          <line x1="425" y1="450" x2="425" y2="490" stroke="#475569" stroke-width="2" />
+
+          <!-- Action 4: Render UI & Save -->
+          <rect x="320" y="490" width="210" height="50" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="2" />
+          <text x="425" y="512" text-anchor="middle" fill="#064e3b" font-size="13" font-weight="bold">Parse Response &amp; Render</text>
+          <text x="425" y="530" text-anchor="middle" fill="#047857" font-size="11" font-weight="bold">Auto-Save Record to History</text>
+          <line x1="425" y1="540" x2="425" y2="585" stroke="#475569" stroke-width="2" />
+
+          <!-- End Node -->
+          <circle cx="425" cy="605" r="16" fill="none" stroke="#059669" stroke-width="3" />
+          <circle cx="425" cy="605" r="10" fill="#059669" />
+        </svg>
+  </div>
+</body>
+</html>

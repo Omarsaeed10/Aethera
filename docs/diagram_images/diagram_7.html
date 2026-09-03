@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  .wrapper {
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 15px;
+    width: 100%;
+    max-width: 1050px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-bottom: 4px;
+    text-align: left;
+  }
+  .desc {
+    font-size: 13px;
+    color: #334155;
+    margin-bottom: 12px;
+    text-align: left;
+    font-weight: 500;
+  }
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+
+</head>
+<body>
+  <div class="wrapper">
+    <div class="title">[7] Entity Relationship Diagram (ERD)</div>
+    <div class="desc">Data structure model representing the 17 core entities, primary keys, and relationships.</div>
+    <svg viewBox="0 0 950 560" xmlns="http://www.w3.org/2000/svg">
+          <!-- Entity 1: USER -->
+          <rect x="50" y="40" width="180" height="150" rx="8" fill="#f8fafc" stroke="#2563eb" stroke-width="2" />
+          <rect x="50" y="40" width="180" height="35" rx="8" fill="#1e3a8a" />
+          <text x="140" y="63" text-anchor="middle" fill="#ffffff" font-weight="bold" font-size="14">USERS</text>
+          <text x="60" y="95" fill="#0f172a" font-size="11" font-weight="bold">🔑 id: INTEGER (PK)</text>
+          <text x="60" y="115" fill="#0f172a" font-size="11">email: VARCHAR</text>
+          <text x="60" y="135" fill="#0f172a" font-size="11">password_hash: TEXT</text>
+          <text x="60" y="155" fill="#0f172a" font-size="11">created_at: DATETIME</text>
+
+          <!-- Entity 2: COURSE -->
+          <rect x="380" y="40" width="180" height="150" rx="8" fill="#f8fafc" stroke="#6d28d9" stroke-width="2" />
+          <rect x="380" y="40" width="180" height="35" rx="8" fill="#4c1d95" />
+          <text x="470" y="63" text-anchor="middle" fill="#ffffff" font-weight="bold" font-size="14">COURSES</text>
+          <text x="390" y="95" fill="#0f172a" font-size="11" font-weight="bold">🔑 id: INTEGER (PK)</text>
+          <text x="390" y="115" fill="#0f172a" font-size="11">🔗 user_id: INT (FK)</text>
+          <text x="390" y="135" fill="#0f172a" font-size="11">title: VARCHAR</text>
+          <text x="390" y="155" fill="#0f172a" font-size="11">color_code: VARCHAR</text>
+
+          <!-- Entity 3: FLASHCARD_DECK -->
+          <rect x="710" y="40" width="190" height="150" rx="8" fill="#f8fafc" stroke="#059669" stroke-width="2" />
+          <rect x="710" y="40" width="190" height="35" rx="8" fill="#064e3b" />
+          <text x="805" y="63" text-anchor="middle" fill="#ffffff" font-weight="bold" font-size="14">FLASHCARD_DECKS</text>
+          <text x="720" y="95" fill="#0f172a" font-size="11" font-weight="bold">🔑 id: INTEGER (PK)</text>
+          <text x="720" y="115" fill="#0f172a" font-size="11">🔗 user_id: INT (FK)</text>
+          <text x="720" y="135" fill="#0f172a" font-size="11">deck_name: VARCHAR</text>
+          <text x="720" y="155" fill="#0f172a" font-size="11">card_count: INT</text>
+
+          <!-- Entity 4: SAVED_NOTE -->
+          <rect x="50" y="320" width="180" height="150" rx="8" fill="#f8fafc" stroke="#d97706" stroke-width="2" />
+          <rect x="50" y="320" width="180" height="35" rx="8" fill="#78350f" />
+          <text x="140" y="343" text-anchor="middle" fill="#ffffff" font-weight="bold" font-size="14">SAVED_NOTES</text>
+          <text x="60" y="375" fill="#0f172a" font-size="11" font-weight="bold">🔑 id: INTEGER (PK)</text>
+          <text x="60" y="395" fill="#0f172a" font-size="11">🔗 user_id: INT (FK)</text>
+          <text x="60" y="415" fill="#0f172a" font-size="11">tool_type: VARCHAR</text>
+          <text x="60" y="435" fill="#0f172a" font-size="11">content_json: TEXT</text>
+
+          <!-- Entity 5: FLASHCARD -->
+          <rect x="710" y="320" width="190" height="150" rx="8" fill="#f8fafc" stroke="#059669" stroke-width="2" />
+          <rect x="710" y="320" width="190" height="35" rx="8" fill="#064e3b" />
+          <text x="805" y="343" text-anchor="middle" fill="#ffffff" font-weight="bold" font-size="14">FLASHCARDS</text>
+          <text x="720" y="375" fill="#0f172a" font-size="11" font-weight="bold">🔑 id: INTEGER (PK)</text>
+          <text x="720" y="395" fill="#0f172a" font-size="11">🔗 deck_id: INT (FK)</text>
+          <text x="720" y="415" fill="#0f172a" font-size="11">front_text: TEXT</text>
+          <text x="720" y="435" fill="#0f172a" font-size="11">back_text: TEXT</text>
+
+          <!-- Relationships -->
+          <line x1="230" y1="115" x2="380" y2="115" stroke="#475569" stroke-width="2" />
+          <text x="240" y="105" fill="#1e3a8a" font-size="12" font-weight="bold">1</text>
+          <text x="365" y="105" fill="#1e3a8a" font-size="12" font-weight="bold">N</text>
+
+          <line x1="140" y1="190" x2="140" y2="320" stroke="#475569" stroke-width="2" />
+          <text x="150" y="210" fill="#1e3a8a" font-size="12" font-weight="bold">1</text>
+          <text x="150" y="305" fill="#1e3a8a" font-size="12" font-weight="bold">N</text>
+
+          <line x1="805" y1="190" x2="805" y2="320" stroke="#475569" stroke-width="2" />
+          <text x="815" y="210" fill="#064e3b" font-size="12" font-weight="bold">1</text>
+          <text x="815" y="305" fill="#064e3b" font-size="12" font-weight="bold">N</text>
+        </svg>
+  </div>
+</body>
+</html>

@@ -2,8 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -20,6 +21,7 @@
     "iconv-lite": "^0.7.3",
     "jsonwebtoken": "^9.0.3",
     "nodemailer": "^9.0.3",
+    "pptxgenjs": "^4.0.1",
     "resend": "^6.17.2",
     "sqlite3": "^6.0.1"
   }

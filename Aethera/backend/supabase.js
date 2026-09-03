@@ -6,16 +6,23 @@ const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABAS
 
 let supabase = null;
 
-if (supabaseUrl && supabaseKey) {
-  supabase = createClient(supabaseUrl, supabaseKey, {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false
-    }
-  });
-  console.log('⚡ Supabase Client initialized successfully.');
+const isValidUrl = supabaseUrl && !supabaseUrl.includes('your-project.supabase.co') && !supabaseUrl.includes('placeholder') && supabaseUrl.startsWith('http');
+const isValidKey = supabaseKey && !supabaseKey.includes('your-anon-key') && !supabaseKey.includes('your-service-role-key');
+
+if (isValidUrl && isValidKey) {
+  try {
+    supabase = createClient(supabaseUrl, supabaseKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false
+      }
+    });
+    console.log('⚡ Supabase Client initialized successfully.');
+  } catch (err) {
+    console.error('Failed to initialize Supabase client:', err.message);
+  }
 } else {
-  console.log('⚠️ Supabase credentials not set in .env (SUPABASE_URL, SUPABASE_ANON_KEY/SUPABASE_SERVICE_ROLE_KEY).');
+  console.log('ℹ️ Supabase placeholder credentials detected. Operating in local SQLite mode.');
 }
 
 module.exports = supabase;

@@ -1,131 +1,208 @@
-# ⚡ Aethera — University Edition (Full-Stack Academic Platform)
+# ⚡ Aethera — University Edition (Full-Stack Academic & Enterprise AI Platform)
 
-> **AI-powered academic toolkit for university students** — 30+ study tools driven by Groq AI (Llama 3.3 70B), full-stack Node.js Express backend, SQLite & Supabase PostgreSQL database schemas, Notion Sync integration, offline support, and cross-device persistence.
+> **Enterprise-grade academic ecosystem for universities and students** — 30+ specialized AI study tools, Groq AI (Llama 3.3 70B), full-stack Node.js Express backend, SQLite & Supabase PostgreSQL relational schemas, Notion Live Sync, SuperMemo SM-2 spaced repetition, side-by-side split-screen study mode, and campus institutional faculty/dean portals.
 
-[![License: Free for Education](https://img.shields.io/badge/license-Free%20for%20Education-7c3aed)](#-license)
-[![Frontend: Vanilla JS](https://img.shields.io/badge/frontend-HTML%20%2F%20CSS%20%2F%20JS-0a0a14?logo=javascript&logoColor=f7df1e)](https://developer.mozilla.org/en-US/docs/Web)
+[![License: MIT](https://img.shields.io/badge/license-MIT-7c3aed.svg)](#-license)
+[![Frontend: Vanilla JS + Glassmorphism](https://img.shields.io/badge/frontend-HTML5%20%2F%20CSS3%20%2F%20Vanilla%20JS-0a0a14?logo=javascript&logoColor=f7df1e)](https://developer.mozilla.org/en-US/docs/Web)
 [![Backend: Node.js + Express](https://img.shields.io/badge/backend-Node.js%20%2B%20Express-339933?logo=node.js&logoColor=white)](https://expressjs.com/)
-[![Database: SQLite & Supabase PostgreSQL](https://img.shields.io/badge/database-SQLite%20%2B%20Supabase-336791?logo=postgresql&logoColor=white)](#-database-schemas)
-[![AI: Groq (Llama 3.3 70B)](https://img.shields.io/badge/AI-Groq%20Llama%203.3%2070B-f55036)](https://groq.com/)
-[![Notion: Live Sync Integration](https://img.shields.io/badge/Notion-Live%20Sync%20API-000000?logo=notion&logoColor=white)](#-notion-sync-integration)
-
-### 🌐 [Live Demo → mindsparkproo.netlify.app](https://mindsparkproo.netlify.app)
+[![Database: SQLite & PostgreSQL](https://img.shields.io/badge/database-SQLite%20%2B%20PostgreSQL%20(Supabase)-336791?logo=postgresql&logoColor=white)](#-database-schemas)
+[![AI Engine: Groq Llama 3.3 70B](https://img.shields.io/badge/AI%20Engine-Groq%20Llama%203.3%2070B-f55036)](https://groq.com/)
+[![Notion: Live Sync API](https://img.shields.io/badge/Notion-Live%20Sync%20API-000000?logo=notion&logoColor=white)](#-notion-sync-integration)
 
 ---
 
 ## 📑 Table of Contents
 
-- [Features](#-features-30-tools)
-- [Database Schemas](#-database-schemas)
-- [Notion Integration](#-notion-sync-integration)
-- [Architecture](#-architecture)
-- [Tech Stack](#-tech-stack)
-- [Getting Started](#-getting-started)
-- [API Documentation](#-api-documentation)
-- [License](#-license)
+- [🌟 Key Highlights & Innovations](#-key-highlights--innovations)
+- [🗂️ 5 Modular Academic Workspaces](#️-5-modular-academic-workspaces)
+- [◫ Side-by-Side Dual Study Mode](#-side-by-side-dual-study-mode)
+- [🔐 Authentication & Campus Portal](#-authentication--campus-portal)
+- [🏛️ University & Faculty Enterprise Suite](#️-university--faculty-enterprise-suite)
+- [🎧 Ambient Sound & Pomodoro Focus HUD](#-ambient-sound--pomodoro-focus-hud)
+- [🗄️ Relational Database Architecture](#️-relational-database-architecture)
+- [🔌 Notion Live Sync Integration](#-notion-live-sync-integration)
+- [🚀 Quick Start Guide](#-quick-start-guide)
+- [⌨️ Keyboard Shortcuts](#️-keyboard-shortcuts)
+- [👨‍💻 Author & Credits](#-author--credits)
 
 ---
 
-## 🎯 Features (30+ Tools)
+## 🌟 Key Highlights & Innovations
 
-### 📚 Study Tools
-| Tool | Description |
-|------|-------------|
-| 📝 **Academic Summarizer** | Brief, Detailed, Critical Review, or Executive Summary styles with **⚡ Sync to Notion** |
-| ❓ **Exam Question Generator** | MCQ, Essay, Short Answer, True/False, Case Study — with difficulty levels |
-| 💡 **Concept Deep Dive** | Definition, theory, history, key scholars, applications, misconceptions |
-| 📅 **Smart Study Planner** | Pomodoro, Spaced Repetition, Standard, or Intensive — with exam date & priorities |
-| ✍️ **Essay Assistant** | Thesis generator, full outline, argument structure, counterarguments, writing tips |
-| 📓 **Cornell Notes** | AI-structured Cornell-format notes from any lecture or topic |
-| 📖 **Citation Builder** | APA 7th, MLA 9th, Chicago, Harvard, IEEE, Vancouver — Book, Article, Website, Chapter, Thesis |
-| 🌍 **Smart Translator** | Academic, Neutral, or Simplified register — 6 languages |
-| 🎧 **Text to Speech** | Browser built-in TTS with voice selection, speed, and pitch controls |
-| 📂 **Lectures Library** | Upload & parse PDF/TXT/DOCX lectures, then feed them into any tool as context |
-
-### 🎮 Interactive Learning
-| Tool | Description |
-|------|-------------|
-| 🧪 **Quick Quiz** | Interactive MCQ with instant feedback, scoring, and difficulty levels |
-| 🧠 **Flashcard Generator** | AI-generated flip-cards with shuffle, navigation, progress tracking, and **Anki export** |
-| 🗺️ **Mind Map Visualizer** | Interactive SVG mind maps generated from any concept |
-| 🤖 **AI Chat** | Conversational AI assistant with session context |
-
-### 🔬 Advanced AI
-| Tool | Description |
-|------|-------------|
-| 🔍 **Research Assistant** | Structured research briefs with angles, theories, scholars, and methodology |
-| 🔄 **Compare Tool** | Side-by-side comparison of two concepts with structured analysis |
-| 🔍 **Plagiarism Analyzer** | Originality assessment and text similarity verification |
-| 📝 **Essay Auto-Grader** | Automated grading and constructive rubric feedback |
-| ✏️ **Paraphraser** | Rewrite content in academic, simplified, or formal register |
-| 💻 **Code Explainer** | Step-by-step explanation of any code snippet |
-| 📖 **Vocabulary Builder** | Definitions, usage examples, contextual word learning, and flashcard mode |
-| 🎙️ **Debate Generator** | Pro/con arguments and structured debate frameworks for any topic |
-| 📜 **Abstract Writer** | Generate academic abstracts from research summaries |
-| 🔤 **Grammar Checker** | Detect and correct grammar, style, and clarity issues |
-
-### ⚡ Productivity & Planning
-| Tool | Description |
-|------|-------------|
-| ⏱️ **Pomodoro Timer** | Customizable study/break timer with session tracking and sound alerts |
-| 🎯 **Goal Tracker** | Set, monitor, and complete academic goals |
-| 🎓 **GPA Calculator** | Calculate and project GPA across courses with **Semester Removal & Addition controls (`+ Semester` / `- Semester`)** |
-| 🗓️ **Academic Calendar** | Track deadlines, exams, and academic milestones |
+1. **Dual-Pane Study Mode (`PANES.split`)**: Real-time side-by-side workspace allowing students to read documents and notes on the left while simultaneously generating summaries, deep-dives, flashcards, or quizzes on the right.
+2. **Web Audio API Ambient Synthesizer**: 100% offline, zero-asset sound generator with Rain Ambience, 432Hz Alpha Lo-Fi Waves, and Study Cafe acoustics.
+3. **Enterprise Faculty & Dean Portals**: Whole-class automated essay/exam grading with rubric feedback, LMS Canvas/Moodle QTI package export, and institutional ROI forecasting.
+4. **Universal 1-Click Sharing & In-Memory SVG QR Codes**: Instant note and quiz distribution via crisp vector QR codes for mobile scanning, WhatsApp, and Telegram.
+5. **Exam Readiness & Study Heatmap**: Predictive academic readiness gauge (0–100%) paired with a 4-week GitHub-style study activity matrix.
+6. **Zen Mode & Fullscreen Support (`F11` / `Shift+F`)**: Distraction-free full-viewport immersive reading.
 
 ---
 
-## 🗄️ Database Schemas
+## 🗂️ 5 Modular Academic Workspaces
 
-Aethera comes equipped with a **17-table Full-Stack Relational Database Suite** (available in local SQLite & PostgreSQL/Supabase format via `backend/schema.sql`):
+Aethera organizes academic tasks into 5 dedicated executive hubs:
 
-1. **`users`**: Authentication, pass hashes, verification tokens.
-2. **`profiles`**: Student ID, major, college, avatar.
-3. **`courses`**: Academic subjects, colors, and semester metadata.
-4. **`documents`**: PDF/DOCX lecture uploads and extracted text.
-5. **`document_embeddings`**: Vector embeddings for AI RAG search (`pgvector`).
-6. **`saved_notes`**: Saved AI outputs, summaries, and favorites.
-7. **`flashcard_decks` & `flashcards`**: Decks, cards, and SuperMemo SM-2 Spaced Repetition scores.
-8. **`quiz_results`**: Exam history, scores, and answer breakdowns.
-9. **`mind_maps`**: SVG/JSON tree structures.
-10. **`study_plans`**: Targeted exam date schedules and daily milestones.
-11. **`shared_resources` & `resource_reviews`**: Community sharing hub & student reviews.
-12. **`chat_sessions` & `chat_messages`**: Conversational history.
-13. **`usage_stats`**: Weekly analytics, streak counters, and earned badges.
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                        ⚡ AETHERA ECOSYSTEM                           │
+├─────────────────┬──────────────────┬─────────────────┬─────────────────┤
+│ 📚 Study & Read │ 🧪 Exams & Memory│ ✍️ Writing & AI │ 🎯 Productivity │
+│ • Summarizer    │ • Super Study    │ • Essay AI      │ • Study Planner │
+│ • Deep Dive     │ • Quiz Gen (MCQ) │ • Citations     │ • Calendar Sync │
+│ • Cornell Notes │ • Flashcards SM-2│ • Abstract Gen  │ • Pomodoro HUD  │
+│ • Translator    │ • Mind Map (SVG) │ • Grammar Check │ • GPA Sim (4/5) │
+└─────────────────┴──────────────────┴─────────────────┴─────────────────┘
+                                   │
+                    🏛️ CAMPUS & ENTERPRISE PORTALS
+                    • Whole-Class AI Auto-Grader
+                    • Campus Dean & License Analytics
+                    • B2B Institutional ROI Model
+```
+
+### 1. 📚 Study & Reading Hub
+- **Executive Summarizer**: Bullet points, critical reviews, and executive takeaways with 1-click Notion sync.
+- **Concept Deep Dive**: First-principles breakdown, academic theories, historical context, and misconceptions.
+- **Cornell Notes Synthesizer**: Automated conversion of unstructured text into Cornell cue/note/summary format.
+- **Multi-Register Academic Translator**: 6 languages with scholarly, neutral, and simplified tone adjustment.
+- **Lectures Library**: PDF/TXT/DOCX parsing and persistent local caching.
+
+### 2. 🧪 Exams & Spaced Repetition Hub
+- **SuperMemo SM-2 Flashcards**: Interval algorithm tracking repetition intervals, difficulty factors, and review dates.
+- **Adaptive Exam Question Generator**: Formats include MCQ, Essay, Short Answer, True/False, and Case Studies.
+- **SVG Mind Map Visualizer**: Interactive hierarchical mind trees rendered dynamically.
+- **Super Study Agent**: Step-by-step Socratic tutor guiding students through complex concepts.
+
+### 3. ✍️ Writing & Research Hub
+- **Essay Architect**: Thesis generator, outline structuring, counter-argument frameworks, and academic tone calibration.
+- **Universal Citation Builder**: APA 7th, MLA 9th, Chicago, Harvard, IEEE, and Vancouver formats.
+- **Scholarly Paraphraser & Grammar Guard**: Refines passive/active voice and formal style without losing conceptual meaning.
+- **Abstract Synthesizer**: Formats 250-word journal abstracts covering objective, methodology, and conclusions.
+
+### 4. 🎯 Focus & Planning Hub
+- **Adaptive Study Timetable**: Automatically schedules study slots according to syllabus deadlines.
+- **GPA & Honors Simulator**: Multi-scale (4.0 & 5.0) cumulative grade simulator with add/remove semester controls.
+- **Virtual Co-Study Rooms**: Accountability study lounges with simulated peer interactions.
+
+### 5. 🏛️ Campus & Enterprise Portals
+- **Faculty Auto-Grading Suite**: Batch student assignment grading against rubrics with grade distribution histograms.
+- **LMS Canvas / Moodle QTI Exporter**: 1-click XML export compatible with all standard higher-ed LMS platforms.
+- **Dean Seat & License Governance**: Real-time license allocation gauges and department workload compliance.
+- **B2B Financial ROI Calculator**: Dynamic cost-benefit simulator calculating annual faculty hours saved and financial returns.
 
 ---
 
-## 🔌 Notion Sync Integration
+## ◫ Side-by-Side Dual Study Mode
 
-Easily export any generated summary or study note directly to your Notion workspace:
-- **Live Connection Test (`/api/notion/test`)**: Validates Notion Integration Token and Database ID in real-time, fetching workspace and database title (`Projects`).
-- **One-Click Page Creation (`/api/notion/sync`)**: Creates formatted pages directly inside the user's Notion database.
-- **Smart URL Parsing**: Automatically extracts Database IDs from full Notion URLs.
+The **Split Workspace** eliminates tab switching during intensive research sessions:
+- **Left Column**: Paste lecture notes, load syllabus documents from the Lectures Library, or draft summaries.
+- **Right Column**: Live AI companion with instant tab switching between **Summarizer**, **Concept Deep Dive**, **Quick Quiz**, **Flashcards**, and **Cornell Notes**.
+- **`⚡ Send Notes to AI Tool →`**: Sends document content to the selected AI pipeline in real-time.
 
 ---
 
-## 🚀 Getting Started
+## 🔐 Authentication & Campus Portal
 
-### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
+- **Full-Featured Auth Portal (`PANES.auth`)**: Dedicated sign-in and sign-up experience with university branding.
+- **Browser Password Manager Integration**: Inputs equipped with `name="username"`, `name="password"`, `autocomplete="current-password"`, and `action="#"` for seamless 1-click autofill in Chrome, Edge, Safari, and 1Password.
+- **Identity Recovery via Student ID**: Password reset verification tied directly to verified academic student IDs.
+- **Password Visibility Toggle**: Inline `👁️` eye control for credential auditing.
+- **1-Click Demo & Saved Credential Autofill**: Fast testing and quick logins via `⚡ Autofill`.
 
-### Installation
-```bash
-# Clone the repository
-git clone https://github.com/Omarsaeed10/sofraa.git
+---
 
-# Navigate to backend directory
-cd Aethera/backend
+## 🎧 Ambient Sound & Pomodoro Focus HUD
 
-# Install dependencies
-npm install
+Aethera includes zero-dependency audio synthesis generated via the **Web Audio API** (requires no external audio downloads and works 100% offline):
+- 🌧️ **Rain Ambience**: Filtered pink-noise algorithm simulating falling rain.
+- 🎵 **Lo-Fi 432Hz Alpha Waves**: Dual-oscillator binaural harmonic drone with low-frequency modulation for cognitive focus.
+- ☕ **Study Cafe Atmosphere**: Warm ambient soundscape.
+- ⏱️ **Persistent Mini Pomodoro HUD**: Pinned directly in the topbar with `25:00 / 5:00` intervals and audible completion alerts.
 
-# Start local server (Runs on http://localhost:34567)
-npm start
+---
+
+## 🗄️ Relational Database Architecture
+
+Aethera features a synchronized **SQLite** and **PostgreSQL (Supabase)** relational schema:
+
+```sql
+users                     profiles                  usage_stats
+├── id (PK)               ├── user_id (FK -> users) ├── user_id (FK -> users)
+├── email (UNIQUE)        ├── student_id            ├── tool_usage (JSON)
+├── password_hash         ├── college               ├── streak
+├── is_active             ├── major                 ├── xp & level
+└── activation_code       └── avatar                └── badges (JSON)
+
+faculty_courses           student_submissions       campus_licenses
+├── id (PK)               ├── id (PK)               ├── id (PK)
+├── code & name           ├── assignment_id         ├── license_key
+├── instructor_id         ├── student_id            ├── university_name
+└── semester              ├── grade & feedback      ├── max_seats & used_seats
+                          └── similarity_score      └── valid_until
 ```
 
 ---
 
-## 🛡️ License
+## 🔌 Notion Live Sync Integration
 
-This project is open-source and free for educational use under the MIT License. Created by **Omar Saeed** for the **AI Ambassadors Program (Batch 8)**.
+- **API Endpoint `/api/notion/sync`**: Directly converts AI-generated summaries into structured Notion database pages.
+- **Live Connection Health Check (`/api/notion/test`)**: Validates integration tokens and retrieves workspace titles.
+- **Smart URL Parsing**: Automatically extracts clean Database IDs from full browser Notion URLs.
+
+---
+
+## 🚀 Quick Start Guide
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18.0.0 or higher)
+- npm or yarn
+
+### Installation & Run
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/Omarsaeed10/Aethera.git
+
+# 2. Enter project backend directory
+cd Aethera/backend
+
+# 3. Install dependencies
+npm install
+
+# 4. Start the server (serves frontend & REST API concurrently on port 34567)
+npm start
+```
+
+Open your browser and navigate to:
+```
+http://localhost:34567
+```
+
+---
+
+## ⌨️ Keyboard Shortcuts
+
+| Shortcut | Action |
+|---|---|
+| `Ctrl + K` | Open Universal Command Palette |
+| `Shift + F` / `F11` | Toggle Fullscreen Mode |
+| `Z` / `Esc` | Toggle Distraction-Free Zen Mode |
+| `?` | Show Shortcuts Modal |
+| `N` | Toggle Scratchpad Sticky Notes |
+| `Ctrl + Enter` | Submit Active AI Prompt |
+| `Ctrl + S` | Save Output to History |
+| `1 – 9` | Instant Switch to Academic Tools 1–9 |
+| `Q` | Open Quick Quiz |
+| `C` | Open AI Chat Assistant |
+| `Space` | Flip Flashcard |
+| `← / →` | Previous / Next Flashcard |
+
+---
+
+## 👨‍💻 Author & Credits
+
+- **Developer**: **Omar Saeed**
+- **Program**: **AI Ambassadors Program (Batch 8)**
+- **License**: Released under the **MIT License** — free for academic and educational usage worldwide.
+
+---
+⚡ *Aethera — Elevating Academic Excellence through Generative Intelligence.*

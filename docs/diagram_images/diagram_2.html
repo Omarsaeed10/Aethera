@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  .wrapper {
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 15px;
+    width: 100%;
+    max-width: 1050px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-bottom: 4px;
+    text-align: left;
+  }
+  .desc {
+    font-size: 13px;
+    color: #334155;
+    margin-bottom: 12px;
+    text-align: left;
+    font-weight: 500;
+  }
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+
+</head>
+<body>
+  <div class="wrapper">
+    <div class="title">[2] Use Case Diagram</div>
+    <div class="desc">Illustrates system capabilities from user perspective with actor relationships and inclusion/extension dependencies.</div>
+    <svg viewBox="0 0 950 620" xmlns="http://www.w3.org/2000/svg">
+          <!-- Boundary -->
+          <rect x="220" y="30" width="510" height="560" rx="16" fill="#f8fafc" stroke="#2563eb" stroke-width="3" />
+          <text x="475" y="65" text-anchor="middle" fill="#1e3a8a" font-weight="bold" font-size="18">Aethera Platform Use Cases</text>
+
+          <!-- Student Actor (Left) -->
+          <circle cx="90" cy="270" r="22" fill="#e0e7ff" stroke="#4338ca" stroke-width="3" />
+          <line x1="90" y1="292" x2="90" y2="350" stroke="#4338ca" stroke-width="3" />
+          <line x1="90" y1="310" x2="50" y2="330" stroke="#4338ca" stroke-width="3" />
+          <line x1="90" y1="310" x2="130" y2="330" stroke="#4338ca" stroke-width="3" />
+          <line x1="90" y1="350" x2="60" y2="400" stroke="#4338ca" stroke-width="3" />
+          <line x1="90" y1="350" x2="120" y2="400" stroke="#4338ca" stroke-width="3" />
+          <text x="90" y="425" text-anchor="middle" fill="#1e1b4b" font-weight="bold" font-size="15">Student / Learner</text>
+
+          <!-- External System Actor (Right) -->
+          <rect x="760" y="270" width="140" height="80" rx="8" fill="#ede9fe" stroke="#6d28d9" stroke-width="2" />
+          <text x="830" y="305" text-anchor="middle" fill="#312e81" font-weight="bold" font-size="14">Groq AI Engine</text>
+          <text x="830" y="330" text-anchor="middle" fill="#4c1d95" font-size="12" font-weight="bold">&amp; Notion API</text>
+
+          <!-- Use Cases (Ellipses) -->
+          <ellipse cx="360" cy="115" rx="105" ry="32" fill="#e0e7ff" stroke="#2563eb" stroke-width="2" />
+          <text x="360" y="120" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="bold">UC-01: Summarize Text</text>
+
+          <ellipse cx="360" cy="200" rx="105" ry="32" fill="#e0e7ff" stroke="#2563eb" stroke-width="2" />
+          <text x="360" y="205" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="bold">UC-02: Generate Exam</text>
+
+          <ellipse cx="360" cy="285" rx="105" ry="32" fill="#e0e7ff" stroke="#2563eb" stroke-width="2" />
+          <text x="360" y="290" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="bold">UC-03: Create Flashcards</text>
+
+          <ellipse cx="360" cy="370" rx="105" ry="32" fill="#e0e7ff" stroke="#2563eb" stroke-width="2" />
+          <text x="360" y="375" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="bold">UC-04: Render Mind Map</text>
+
+          <ellipse cx="360" cy="455" rx="105" ry="32" fill="#e0e7ff" stroke="#2563eb" stroke-width="2" />
+          <text x="360" y="460" text-anchor="middle" fill="#0f172a" font-size="13" font-weight="bold">UC-05: Calculate GPA</text>
+
+          <ellipse cx="360" cy="540" rx="105" ry="32" fill="#d1fae5" stroke="#059669" stroke-width="2" />
+          <text x="360" y="545" text-anchor="middle" fill="#064e3b" font-size="13" font-weight="bold">UC-06: Export to Notion</text>
+
+          <!-- Included UC -->
+          <ellipse cx="610" cy="240" rx="100" ry="32" fill="#ddd6fe" stroke="#6d28d9" stroke-width="2" />
+          <text x="610" y="245" text-anchor="middle" fill="#312e81" font-size="12" font-weight="bold">UC-07: Validate API Key</text>
+
+          <ellipse cx="610" cy="115" rx="95" ry="30" fill="#c7d2fe" stroke="#4338ca" stroke-width="2" />
+          <text x="610" y="120" text-anchor="middle" fill="#1e1b4b" font-size="12" font-weight="bold">UC-08: Parse PDF/Doc</text>
+
+          <!-- Connections Actor -> Use Cases -->
+          <line x1="140" y1="310" x2="258" y2="125" stroke="#4338ca" stroke-width="2" />
+          <line x1="140" y1="320" x2="258" y2="200" stroke="#4338ca" stroke-width="2" />
+          <line x1="140" y1="330" x2="258" y2="285" stroke="#4338ca" stroke-width="2" />
+          <line x1="140" y1="340" x2="258" y2="370" stroke="#4338ca" stroke-width="2" />
+          <line x1="140" y1="350" x2="258" y2="455" stroke="#4338ca" stroke-width="2" />
+          <line x1="140" y1="360" x2="258" y2="540" stroke="#4338ca" stroke-width="2" />
+
+          <!-- Includes / Extends -->
+          <line x1="460" y1="135" x2="525" y2="215" stroke="#6d28d9" stroke-width="2" stroke-dasharray="4,4" />
+          <text x="475" y="170" fill="#4c1d95" font-size="11" font-weight="bold">&lt;&lt;include&gt;&gt;</text>
+
+          <line x1="465" y1="115" x2="515" y2="115" stroke="#4338ca" stroke-width="2" stroke-dasharray="4,4" />
+          <text x="480" y="105" fill="#1e1b4b" font-size="11" font-weight="bold">&lt;&lt;extend&gt;&gt;</text>
+
+          <line x1="710" y1="240" x2="760" y2="300" stroke="#6d28d9" stroke-width="2" />
+          <line x1="465" y1="540" x2="760" y2="320" stroke="#059669" stroke-width="2" />
+        </svg>
+  </div>
+</body>
+</html>

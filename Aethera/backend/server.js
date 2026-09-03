@@ -13,6 +13,7 @@ const supabase = require('./supabase');
 const { logAudit, encryptText, decryptText } = require('./utils/security');
 const { getCachedCompletion, setCachedCompletion, callMultiProviderAI, analyzePlagiarism, gradeEssay } = require('./utils/ai_engine');
 const { PLANS, checkUserQuota, createCheckoutSession, activateSubscription } = require('./utils/payments');
+const { generateLicenseKey, generateQtiXml, generateMoodleXml, calculateCohortRisk, calculateInstitutionalROI } = require('./utils/enterprise');
 
 const app = express();
 const PORT = process.env.PORT || 34567;
@@ -38,7 +39,7 @@ const smtpHost = process.env.SMTP_HOST;
 const smtpPort = process.env.SMTP_PORT || 587;
 const smtpUser = process.env.SMTP_USER;
 const smtpPass = process.env.SMTP_PASS;
-const smtpFrom = process.env.SMTP_FROM || '"MindSpark" <no-reply@mindspark.edu>';
+const smtpFrom = process.env.SMTP_FROM || '"Aethera" <no-reply@aethera.edu>';
 
 let transporter = null;
 
@@ -65,14 +66,14 @@ async function sendActivationEmail(email, code, token, hostHeader, secureConnect
     <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0b0f19; color: #f3f4f6; padding: 40px; border-radius: 12px; max-width: 600px; margin: 0 auto; border: 1px solid #1f2937; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
       <div style="text-align: center; margin-bottom: 30px;">
         <span style="font-size: 40px;">⚡</span>
-        <h1 style="color: #a78bfa; margin-top: 10px; font-weight: 800; letter-spacing: 1px;">MINDSPARK</h1>
+        <h1 style="color: #a78bfa; margin-top: 10px; font-weight: 800; letter-spacing: 1px;">AETHERA</h1>
         <p style="color: #9ca3af; font-size: 14px; margin-top: -10px;">University Edition</p>
       </div>
       
       <div style="background-color: #111827; border-radius: 8px; padding: 24px; border: 1px solid #374151; margin-bottom: 24px;">
         <h2 style="color: #ffffff; font-size: 18px; margin-top: 0;">Activate Your Account</h2>
         <p style="color: #d1d5db; line-height: 1.6; font-size: 14px;">
-          Thank you for signing up for MindSpark! Please verify your email address to unlock your academic workspace.
+          Thank you for signing up for Aethera! Please verify your email address to unlock your academic workspace.
         </p>
         
         <div style="text-align: center; margin: 30px 0;">
@@ -90,7 +91,7 @@ async function sendActivationEmail(email, code, token, hostHeader, secureConnect
       </div>
       
       <p style="color: #6b7280; font-size: 12px; line-height: 1.5; text-align: center;">
-        If you didn't register for MindSpark, please ignore this email.<br>
+        If you didn't register for Aethera, please ignore this email.<br>
         Or copy and paste this link in your browser:<br>
         <a href="${activationLink}" style="color: #8b5cf6; text-decoration: underline;">${activationLink}</a>
       </p>
@@ -102,7 +103,7 @@ async function sendActivationEmail(email, code, token, hostHeader, secureConnect
       await transporter.sendMail({
         from: smtpFrom,
         to: email,
-        subject: 'Activate Your MindSpark Account',
+        subject: 'Activate Your Aethera Account',
         html: emailHtml
       });
       console.log(`Activation email sent successfully to: ${email}`);
@@ -118,7 +119,7 @@ async function sendActivationEmail(email, code, token, hostHeader, secureConnect
 function logMockEmail(email, code, activationLink) {
   console.log('\n=================== MOCK EMAIL SENT ===================');
   console.log(`To: ${email}`);
-  console.log(`Subject: Activate Your MindSpark Account`);
+  console.log(`Subject: Activate Your Aethera Account`);
   console.log(`Verification Code: ${code}`);
   console.log(`Activation Link: ${activationLink}`);
   console.log('=======================================================\n');
@@ -144,7 +145,7 @@ function authenticateToken(req, res, next) {
 
 // ── AUTH ROUTES ──
 
-app.post('/api/auth/signup', async (req, res) => {
+app.post(['/api/auth/signup', '/api/auth/register'], async (req, res) => {
   const { email, password, displayName } = req.body;
 
   if (!email || !password) {
@@ -498,12 +499,18 @@ app.post('/api/chat', apiLimiter, optionalAuthenticateToken, async (req, res) =>
 
   // Model validation: only pass user model to matching provider
   const PROVIDER_MODELS = {
-    groq: hasVision ? 'llama-3.2-11b-vision-preview' : 'llama-3.3-70b-versatile',
+    groq: hasVision ? 'llama-3.2-11b-vision-preview' : 'openai/gpt-oss-120b',
     gemini: 'gemini-1.5-flash',
     openai: 'gpt-4o-mini'
   };
 
   function getModelForProvider(providerName) {
+    if (providerName === 'groq') {
+      if (model && (model.startsWith('openai/') || model.startsWith('qwen/') || model.startsWith('groq/') || model.startsWith('allam-'))) {
+        return model;
+      }
+      return PROVIDER_MODELS.groq;
+    }
     // Always use the provider's native model to prevent cross-provider errors
     return PROVIDER_MODELS[providerName];
   }
@@ -518,6 +525,8 @@ app.post('/api/chat', apiLimiter, optionalAuthenticateToken, async (req, res) =>
     providersToTry.push({ name: 'gemini', url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions', key: process.env.GEMINI_API_KEY, model: getModelForProvider('gemini') });
   } else if (process.env.GROQ_API_KEY) {
     providersToTry.push({ name: 'groq', url: 'https://api.groq.com/openai/v1/chat/completions', key: process.env.GROQ_API_KEY, model: getModelForProvider('groq') });
+    // Backup Groq model in case primary hits limit
+    providersToTry.push({ name: 'groq', url: 'https://api.groq.com/openai/v1/chat/completions', key: process.env.GROQ_API_KEY, model: 'qwen/qwen3.8-27b' });
   }
 
   // Backup providers (always use their own default model)
@@ -597,8 +606,8 @@ app.post('/api/chat', apiLimiter, optionalAuthenticateToken, async (req, res) =>
 
   // Smart AI Generator Fallback when cloud API keys fail or are unconfigured
   console.log("Serving Smart AI Fallback Generation.");
-  const lastUserMsg = messages.filter(m => m.role === 'user').pop()?.content || '';
-  const fallbackText = generateSmartFallbackContent(lastUserMsg);
+  const fullPromptText = messages.map(m => typeof m.content === 'string' ? m.content : JSON.stringify(m.content)).join(' ');
+  const fallbackText = generateSmartFallbackContent(fullPromptText);
 
   if (stream) {
     res.setHeader('Content-Type', 'text/event-stream');
@@ -638,74 +647,106 @@ function generateSmartFallbackContent(userPrompt) {
   
   // ── Flashcard requests (front/back JSON) ──
   if (p.includes('front') && p.includes('back') && p.includes('flashcard')) {
-    return JSON.stringify([
-      { front: "What is an Algorithm?", back: "A step-by-step procedure for solving a problem or performing a computation in a finite number of steps." },
-      { front: "Define Big-O Notation", back: "A mathematical notation that describes the upper bound of an algorithm's time or space complexity as input size grows." },
-      { front: "What is a Stack?", back: "A linear data structure that follows LIFO (Last In, First Out) principle. Push adds to top, Pop removes from top." },
-      { front: "What is Polymorphism?", back: "An OOP principle allowing objects of different classes to be treated as objects of a common superclass, with methods behaving differently based on the actual object type." },
-      { front: "Define Normalization in Databases", back: "The process of organizing data in a database to reduce redundancy and improve data integrity, typically through 1NF, 2NF, 3NF forms." },
-      { front: "What is TCP/IP?", back: "Transmission Control Protocol/Internet Protocol — the fundamental communication protocol suite of the internet that provides reliable, ordered data delivery between applications." },
-      { front: "Explain Binary Search", back: "A search algorithm that finds the position of a target value within a sorted array by repeatedly dividing the search interval in half. Time complexity: O(log n)." },
-      { front: "What is Machine Learning?", back: "A subset of AI where systems learn and improve from experience (data) without being explicitly programmed, using statistical techniques to identify patterns." },
-      { front: "Define Recursion", back: "A programming technique where a function calls itself to solve smaller instances of the same problem, with a base case to stop the recursion." },
-      { front: "What is an API?", back: "Application Programming Interface — a set of protocols and tools for building software that specifies how software components should interact." },
-      { front: "Explain Inheritance in OOP", back: "A mechanism where a new class (child/subclass) derives properties and behaviors from an existing class (parent/superclass), promoting code reuse." },
-      { front: "What is a Hash Table?", back: "A data structure that maps keys to values using a hash function for O(1) average-case lookup, insertion, and deletion." },
-      { front: "Define SQL JOIN", back: "An SQL clause that combines rows from two or more tables based on a related column. Types: INNER, LEFT, RIGHT, FULL OUTER, CROSS." },
-      { front: "What is Encapsulation?", back: "An OOP principle of bundling data (attributes) and methods that operate on the data within a single unit (class), restricting direct access to some components." },
-      { front: "Explain the OSI Model", back: "A 7-layer conceptual framework for network communication: Physical, Data Link, Network, Transport, Session, Presentation, Application." }
-    ]);
+    const textBody = rawText
+      .replace(/^(?:Analyze|Generate|Provide|Summarize|Create)\s+[\s\S]*?(?:lecture text|following text|study materials|topic|materials|about|level|level:):\s*/gi, '')
+      .replace(/Format strictly as JSON array:[\s\S]*/gi, '')
+      .replace(/\[📚 Large Lecture:.*?\]/gi, '')
+      .replace(/===.*?===/g, '')
+      .trim();
+
+    const sentences = textBody.split(/(?<=[.!?\n])\s+/).map(s => s.trim()).filter(s => s.length > 15 && !s.toLowerCase().includes('json') && !s.toLowerCase().includes('generate'));
+
+    if (sentences.length >= 2) {
+      const generatedCards = [];
+      const numCards = Math.min(10, Math.max(4, Math.floor(sentences.length / 2)));
+      for (let i = 0; i < numCards; i++) {
+        const sentence = sentences[i * 2] || sentences[i];
+        const words = sentence.split(/\s+/);
+        const frontTerm = words.slice(0, Math.min(6, words.length)).join(' ');
+        const backAnswer = words.slice(Math.min(6, words.length)).join(' ') || sentence;
+
+        generatedCards.push({
+          front: `Define or explain: ${frontTerm.replace(/[.:;]/g, '')}`,
+          back: backAnswer.trim()
+        });
+      }
+      return JSON.stringify(generatedCards);
+    }
   }
 
   // ── Quiz / MCQ requests (q/opts/ans JSON) ──
-  if (p.includes('opts') || p.includes('mcq') || (p.includes('quiz') && p.includes('json')) || (p.includes('ans') && p.includes('json'))) {
-    return JSON.stringify([
-      {
-        q: "What is the primary purpose of data structures in computer science?",
-        opts: ["To increase hardware clock speed", "To organize and store data efficiently for algorithmic operations", "To replace operating system kernels", "To compile machine code into bytecode"],
-        ans: 1
-      },
-      {
-        q: "Which algorithm design paradigm divides a problem into subproblems, solves them recursively, and combines their solutions?",
-        opts: ["Greedy Approach", "Dynamic Programming", "Divide and Conquer", "Backtracking"],
-        ans: 2
-      },
-      {
-        q: "In machine learning, what occurs during overfitting?",
-        opts: ["The model performs poorly on training data", "The model memorizes training noise, degrading generalization to new data", "The learning rate is set too low", "The model uses insufficient parameters"],
-        ans: 1
-      },
-      {
-        q: "What is the time complexity of searching an element in a balanced Binary Search Tree (BST)?",
-        opts: ["O(1)", "O(N)", "O(log N)", "O(N^2)"],
-        ans: 2
-      },
-      {
-        q: "Which protocol operates at the Transport Layer of the OSI Model to provide reliable, ordered data delivery?",
-        opts: ["IP (Internet Protocol)", "TCP (Transmission Control Protocol)", "UDP (User Datagram Protocol)", "HTTP (Hypertext Transfer Protocol)"],
-        ans: 1
+  if (p.includes('opts') || p.includes('mcq') || p.includes('multiple-choice') || p.includes('quiz') || p.includes('question') || (p.includes('ans') && p.includes('json'))) {
+    const textBody = rawText
+      .replace(/You are an expert[\s\S]*?generator\.?\s*/gi, '')
+      .replace(/^(?:Analyze|Generate|Provide|Summarize|Create)\s+[\s\S]*?(?:lecture text|following text|study materials|topic|materials|about|level|level|ans):\s*/gi, '')
+      .replace(/Format strictly as JSON array:[\s\S]*/gi, '')
+      .replace(/\[📚 Large Lecture:.*?\]/gi, '')
+      .replace(/===.*?===/g, '')
+      .trim();
+
+    const cleanInput = textBody || rawText;
+    const sentences = cleanInput.split(/(?<=[.!?\n])\s+/).map(s => s.trim()).filter(s => s.length > 5 && !s.toLowerCase().includes('json array'));
+    const sourceList = sentences.length > 0 ? sentences : [cleanInput];
+
+    const generatedQuiz = [];
+    const numQuestions = 5;
+    
+    for (let i = 0; i < numQuestions; i++) {
+      const targetSentence = sourceList[i % sourceList.length] || cleanInput;
+      const nextSentence = sourceList[(i + 1) % sourceList.length] || targetSentence;
+      
+      const words = String(targetSentence).split(/\s+/);
+      const term = words.slice(0, Math.min(6, words.length)).join(' ');
+      const detail = words.slice(Math.min(6, words.length)).join(' ') || String(targetSentence);
+      
+      const wrongOpt1 = String(nextSentence).slice(0, 120);
+      const wrongOpt2 = String(sourceList[(i + 2) % sourceList.length] || "It applies under controlled laboratory conditions.").slice(0, 120);
+      const wrongOpt3 = String(sourceList[(i + 3) % sourceList.length] || "It represents a secondary constraint in theoretical modeling.").slice(0, 120);
+
+      const correctOpt = (detail.length > 5 ? detail : targetSentence).slice(0, 140);
+      
+      const options = [correctOpt, wrongOpt1, wrongOpt2, wrongOpt3];
+      const correctIndex = i % 4;
+      if (correctIndex !== 0) {
+        const temp = options[0];
+        options[0] = options[correctIndex];
+        options[correctIndex] = temp;
       }
-    ]);
+
+      generatedQuiz.push({
+        q: `According to the study materials, what is key regarding "${term.replace(/[.:;]/g, '')}"?`,
+        opts: options.map(o => o.trim()),
+        ans: correctIndex
+      });
+    }
+    return JSON.stringify(generatedQuiz);
   }
 
   // ── Dynamic text summary response ──
-  const textBody = rawText.replace(/Provide\s+.*?\s+of the following text:\s*/gi, '').replace(/===.*?===/g, '').trim();
+  const textBody = rawText
+    .replace(/^(?:Analyze|Generate|Provide|Summarize|Create)\s+[\s\S]*?(?:lecture text|following text|topic|materials|text):\s*/gi, '')
+    .replace(/\[📚 Large Lecture:.*?\]/gi, '')
+    .replace(/===.*?===/g, '')
+    .trim();
+
   const sentences = textBody.split(/(?<=[.!?\n])\s+/).map(s => s.trim()).filter(s => s.length > 8);
   
   if (sentences.length > 0) {
-    const overview = sentences.slice(0, 3).join(' ');
-    let keyPoints = sentences.slice(3, 8).map(s => `- **Key Concept:** ${s}`).join('\n');
+    const overview = sentences.slice(0, 4).join(' ');
+    let keyPoints = sentences.slice(4, 10).map(s => `- **Key Concept:** ${s}`).join('\n');
     if (!keyPoints) {
       keyPoints = sentences.slice(0, 4).map(s => `- **Core Idea:** ${s}`).join('\n');
     }
     
-    let deepDive = sentences.slice(8, 13).map((s, i) => `${i + 1}. **Takeaway ${i + 1}:** ${s}`).join('\n');
-    if (!deepDive) {
-      deepDive = `1. **Core Logical Principle:** Understand how propositions combine using logical connectives.\n2. **Practical Verification:** Verify truth values and logical equivalences using truth tables.`;
+    let deepDive = sentences.slice(10, 16).map((s, i) => `${i + 1}. **Takeaway ${i + 1}:** ${s}`).join('\n');
+    if (!deepDive && sentences.length > 4) {
+      deepDive = sentences.slice(4, 10).map((s, i) => `${i + 1}. **Takeaway ${i + 1}:** ${s}`).join('\n');
     }
 
     let title = "Executive Academic Summary";
-    if (p.includes('proposition') || p.includes('logic') || p.includes('discrete')) {
+    if (p.includes('software') || p.includes('engineering')) {
+      title = "Software Engineering & Systems Summary";
+    } else if (p.includes('proposition') || p.includes('logic') || p.includes('discrete')) {
       title = "Propositional Logic & Mathematical Foundations Summary";
     } else if (p.includes('computer') || p.includes('algorithm') || p.includes('data')) {
       title = "Computer Science & Technical Analysis Summary";
@@ -719,8 +760,7 @@ ${overview}
 #### 📌 Core Concepts & Key Highlights
 ${keyPoints}
 
-#### 🔍 Critical Analysis & Key Takeaways
-${deepDive}
+${deepDive ? `#### 🔍 Critical Analysis & Key Takeaways\n${deepDive}` : ''}
 
 ---
 *💡 Tip: Use the Flashcards or Quiz tools to test your retention on this specific material!*`;
@@ -729,12 +769,10 @@ ${deepDive}
   return `### 📝 Academic Summary & Analysis
 
 #### 🎯 Core Overview
-The study material explores fundamental principles, key definitions, and academic concepts.
+Please paste or load the complete lecture text to generate a comprehensive summary.
 
 #### 📌 Key Takeaways
-- **Theoretical Foundations:** Understand main definitions and core principles.
-- **Critical Relationships:** Examine how key components interact.
-- **Practical Application:** Apply concepts to problem-solving and academic assessments.`;
+- **Lecture Context Required:** Load a lecture from your library or paste lecture text into the field.`;
 }
 
 
@@ -743,9 +781,10 @@ The study material explores fundamental principles, key definitions, and academi
 app.post('/api/transcribe', apiLimiter, optionalAuthenticateToken, async (req, res) => {
   const { audio, fileType } = req.body;
   const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+  const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
-  if (!OPENAI_API_KEY) {
-    return res.status(500).json({ error: 'OPENAI_API_KEY is not configured for Whisper transcription.' });
+  if (!OPENAI_API_KEY && !GROQ_API_KEY) {
+    return res.status(500).json({ error: 'Neither OPENAI_API_KEY nor GROQ_API_KEY is configured for Whisper transcription.' });
   }
 
   if (!audio) {
@@ -761,12 +800,23 @@ app.post('/api/transcribe', apiLimiter, optionalAuthenticateToken, async (req, r
     const file = new File([audioBuffer], `audio.${ext}`, { type: `audio/${ext}` });
     
     formData.append('file', file);
-    formData.append('model', 'whisper-1');
 
-    const whisperResponse = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+    let apiUrl = 'https://api.openai.com/v1/audio/transcriptions';
+    let apiKey = OPENAI_API_KEY;
+    let modelName = 'whisper-1';
+
+    if (!OPENAI_API_KEY && GROQ_API_KEY) {
+      apiUrl = 'https://api.groq.com/openai/v1/audio/transcriptions';
+      apiKey = GROQ_API_KEY;
+      modelName = 'whisper-large-v3';
+    }
+    
+    formData.append('model', modelName);
+
+    const whisperResponse = await fetch(apiUrl, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`
+        'Authorization': `Bearer ${apiKey}`
       },
       body: formData
     });
@@ -878,7 +928,7 @@ app.post('/api/notion/sync', optionalAuthenticateToken, async (req, res) => {
         properties: {
           [titlePropKey]: {
             title: [
-              { text: { content: (title || 'MindSpark Study Notes').slice(0, 200) } }
+              { text: { content: (title || 'Aethera Study Notes').slice(0, 200) } }
             ]
           }
         },
@@ -1671,6 +1721,348 @@ app.post('/api/embeddings', authenticateToken, (req, res) => {
       res.json({ success: true, chunkId: this.lastID });
     }
   );
+});
+
+// ══════════════════════════════════════════════════════
+// 🏛️ ENTERPRISE EDTECH & UNIVERSITY SAAS API ENDPOINTS
+// ══════════════════════════════════════════════════════
+
+// 1. INSTITUTIONS DIRECTORY & CAMPUS TENANTS
+app.get('/api/enterprise/institutions', (req, res) => {
+  db.all('SELECT id, name, domain, country, tier, seats_total, seats_used, license_key, created_at FROM institutions ORDER BY seats_total DESC', [], (err, rows) => {
+    if (err) return res.status(500).json({ error: 'Database error fetching institutions' });
+    res.json({ success: true, institutions: rows || [] });
+  });
+});
+
+app.post('/api/enterprise/institutions', authenticateToken, (req, res) => {
+  const { name, domain, country, tier, seats_total } = req.body;
+  if (!name || !domain) return res.status(400).json({ error: 'name and domain are required' });
+
+  const licenseKey = generateLicenseKey(domain.split('.')[0] || 'CAMPUS');
+  const seats = seats_total || 5000;
+
+  db.run(
+    'INSERT INTO institutions (name, domain, country, tier, seats_total, seats_used, license_key) VALUES (?, ?, ?, ?, ?, 0, ?)',
+    [name, domain, country || 'Global', tier || 'campus_enterprise', seats, licenseKey],
+    function (err) {
+      if (err) return res.status(500).json({ error: 'Failed to create institution' });
+      
+      const instId = this.lastID;
+      // Record initial active license
+      const expiry = new Date();
+      expiry.setFullYear(expiry.getFullYear() + 1);
+      
+      db.run(
+        'INSERT INTO enterprise_licenses (institution_id, license_key, plan_name, max_seats, expires_at) VALUES (?, ?, ?, ?, ?)',
+        [instId, licenseKey, 'Campus Unlimited AI Suite', seats, expiry.toISOString()]
+      );
+
+      res.json({ success: true, institutionId: instId, licenseKey });
+    }
+  );
+});
+
+// 2. ENTERPRISE LICENSE VERIFICATION & ACTIVATION
+app.post('/api/enterprise/licenses/verify', (req, res) => {
+  const { licenseKey } = req.body;
+  if (!licenseKey) return res.status(400).json({ error: 'licenseKey is required' });
+
+  db.get(
+    `SELECT i.*, l.plan_name, l.expires_at, l.is_active as license_active 
+     FROM institutions i 
+     LEFT JOIN enterprise_licenses l ON i.id = l.institution_id 
+     WHERE i.license_key = ? OR l.license_key = ?`,
+    [licenseKey, licenseKey],
+    (err, row) => {
+      if (err || !row) return res.status(404).json({ error: 'Invalid or expired enterprise license key.' });
+      res.json({
+        success: true,
+        institution: {
+          id: row.id,
+          name: row.name,
+          domain: row.domain,
+          tier: row.tier,
+          seatsTotal: row.seats_total,
+          seatsUsed: row.seats_used,
+          planName: row.plan_name || 'Campus Unlimited AI',
+          expiresAt: row.expires_at
+        }
+      });
+    }
+  );
+});
+
+app.post('/api/enterprise/licenses/activate', authenticateToken, (req, res) => {
+  const userId = req.user.id;
+  const { licenseKey, department } = req.body;
+
+  if (!licenseKey) return res.status(400).json({ error: 'licenseKey is required' });
+
+  db.get('SELECT * FROM institutions WHERE license_key = ?', [licenseKey], (err, inst) => {
+    if (err || !inst) return res.status(404).json({ error: 'Enterprise license key not recognized.' });
+
+    // Enroll user into institution
+    db.run(
+      `INSERT INTO institution_members (institution_id, user_id, role, department) 
+       VALUES (?, ?, 'student', ?)`,
+      [inst.id, userId, department || 'General Studies'],
+      function (memberErr) {
+        // Upgrade user subscription quota to campus enterprise tier
+        activateSubscription(userId, 'campus', () => {
+          // Increment seats_used
+          db.run('UPDATE institutions SET seats_used = seats_used + 1 WHERE id = ?', [inst.id]);
+          logAudit(userId, `CAMPUS_LICENSE_ACTIVATED:${inst.name}`, req.ip, req.headers['user-agent']);
+          res.json({
+            success: true,
+            institutionName: inst.name,
+            role: 'student',
+            message: `Successfully linked your academic profile to ${inst.name}! Enterprise AI features unlocked.`
+          });
+        });
+      }
+    );
+  });
+});
+
+// 3. INSTRUCTOR ACADEMIC CLASSES
+app.get('/api/enterprise/instructor/classes', authenticateToken, (req, res) => {
+  const userId = req.user.id;
+  db.all(
+    `SELECT c.*, 
+      (SELECT COUNT(*) FROM class_roster r WHERE r.class_id = c.id) as students_count,
+      (SELECT COUNT(*) FROM class_assignments a WHERE a.class_id = c.id) as assignments_count
+     FROM instructor_classes c 
+     WHERE c.instructor_id = ? 
+     ORDER BY c.created_at DESC`,
+    [userId],
+    (err, rows) => {
+      if (err) return res.status(500).json({ error: 'Database error fetching classes' });
+      res.json({ success: true, classes: rows || [] });
+    }
+  );
+});
+
+app.post('/api/enterprise/instructor/classes', authenticateToken, (req, res) => {
+  const instructorId = req.user.id;
+  const { class_name, course_code, department, semester, syllabus_text } = req.body;
+  if (!class_name || !course_code) return res.status(400).json({ error: 'class_name and course_code are required' });
+
+  db.run(
+    'INSERT INTO instructor_classes (instructor_id, class_name, course_code, department, semester, syllabus_text) VALUES (?, ?, ?, ?, ?, ?)',
+    [instructorId, class_name, course_code, department || 'Computer Science', semester || 'Fall 2026', syllabus_text || ''],
+    function (err) {
+      if (err) return res.status(500).json({ error: 'Failed to create class' });
+      res.json({ success: true, classId: this.lastID });
+    }
+  );
+});
+
+// 4. CLASS ROSTER
+app.get('/api/enterprise/instructor/classes/:id/roster', authenticateToken, (req, res) => {
+  const classId = req.params.id;
+  db.all('SELECT * FROM class_roster WHERE class_id = ? ORDER BY student_name ASC', [classId], (err, rows) => {
+    if (err) return res.status(500).json({ error: 'Database error fetching roster' });
+    res.json({ success: true, roster: rows || [] });
+  });
+});
+
+app.post('/api/enterprise/instructor/classes/:id/roster', authenticateToken, (req, res) => {
+  const classId = req.params.id;
+  const { student_name, student_email, student_id } = req.body;
+  if (!student_name || !student_email) return res.status(400).json({ error: 'student_name and student_email are required' });
+
+  db.run(
+    'INSERT INTO class_roster (class_id, student_id, student_name, student_email) VALUES (?, ?, ?, ?)',
+    [classId, student_id || null, student_name, student_email],
+    function (err) {
+      if (err) return res.status(500).json({ error: 'Failed to add student to roster' });
+      res.json({ success: true, rosterId: this.lastID });
+    }
+  );
+});
+
+// 5. CLASS ASSIGNMENTS
+app.get('/api/enterprise/instructor/classes/:id/assignments', authenticateToken, (req, res) => {
+  const classId = req.params.id;
+  db.all(
+    `SELECT a.*, 
+      (SELECT COUNT(*) FROM class_submissions s WHERE s.assignment_id = a.id) as submissions_count,
+      (SELECT AVG(s.score) FROM class_submissions s WHERE s.assignment_id = a.id) as avg_score
+     FROM class_assignments a 
+     WHERE a.class_id = ? 
+     ORDER BY a.created_at DESC`,
+    [classId],
+    (err, rows) => {
+      if (err) return res.status(500).json({ error: 'Database error fetching assignments' });
+      res.json({ success: true, assignments: rows || [] });
+    }
+  );
+});
+
+app.post('/api/enterprise/instructor/classes/:id/assignments', authenticateToken, (req, res) => {
+  const classId = req.params.id;
+  const { title, prompt, rubric_json, max_score, due_date } = req.body;
+  if (!title || !prompt) return res.status(400).json({ error: 'title and prompt are required' });
+
+  const rubricStr = typeof rubric_json === 'object' ? JSON.stringify(rubric_json) : (rubric_json || '{}');
+
+  db.run(
+    'INSERT INTO class_assignments (class_id, title, prompt, rubric_json, max_score, due_date) VALUES (?, ?, ?, ?, ?, ?)',
+    [classId, title, prompt, rubricStr, max_score || 100, due_date || null],
+    function (err) {
+      if (err) return res.status(500).json({ error: 'Failed to create assignment' });
+      res.json({ success: true, assignmentId: this.lastID });
+    }
+  );
+});
+
+// 6. SUBMISSIONS & BATCH AI AUTOMATED GRADING
+app.get('/api/enterprise/instructor/assignments/:id/submissions', authenticateToken, (req, res) => {
+  const assignmentId = req.params.id;
+  db.all('SELECT * FROM class_submissions WHERE assignment_id = ? ORDER BY score DESC, created_at DESC', [assignmentId], (err, rows) => {
+    if (err) return res.status(500).json({ error: 'Database error fetching submissions' });
+    const formatted = (rows || []).map(r => ({
+      ...r,
+      ai_feedback: r.ai_feedback_json ? JSON.parse(r.ai_feedback_json) : {}
+    }));
+    res.json({ success: true, submissions: formatted });
+  });
+});
+
+app.post('/api/enterprise/instructor/assignments/:id/submissions', authenticateToken, (req, res) => {
+  const assignmentId = req.params.id;
+  const { student_id, student_name, submission_text } = req.body;
+  if (!student_name || !submission_text) return res.status(400).json({ error: 'student_name and submission_text are required' });
+
+  db.run(
+    'INSERT INTO class_submissions (assignment_id, student_id, student_name, submission_text) VALUES (?, ?, ?, ?)',
+    [assignmentId, student_id || null, student_name, submission_text],
+    function (err) {
+      if (err) return res.status(500).json({ error: 'Failed to record submission' });
+      res.json({ success: true, submissionId: this.lastID });
+    }
+  );
+});
+
+app.post('/api/enterprise/instructor/assignments/:id/grade-batch', authenticateToken, async (req, res) => {
+  const assignmentId = req.params.id;
+
+  db.get('SELECT * FROM class_assignments WHERE id = ?', [assignmentId], async (assignErr, assignment) => {
+    if (assignErr || !assignment) return res.status(404).json({ error: 'Assignment not found' });
+
+    db.all('SELECT * FROM class_submissions WHERE assignment_id = ?', [assignmentId], async (subErr, submissions) => {
+      if (subErr || !submissions || submissions.length === 0) {
+        return res.status(400).json({ error: 'No submissions found to grade.' });
+      }
+
+      const gradedResults = [];
+
+      for (const sub of submissions) {
+        try {
+          const gradeReport = await gradeEssay({
+            question: assignment.prompt,
+            studentAnswer: sub.submission_text,
+            rubric: assignment.rubric_json
+          });
+
+          const plagReport = await analyzePlagiarism(sub.submission_text);
+
+          const finalScore = gradeReport.score || 85;
+          const letterGrade = gradeReport.letterGrade || (finalScore >= 90 ? 'A' : (finalScore >= 80 ? 'B' : (finalScore >= 70 ? 'C' : 'D')));
+          const feedbackJson = JSON.stringify(gradeReport);
+          const plagScore = plagReport.aiLikelihood || 12;
+
+          db.run(
+            `UPDATE class_submissions 
+             SET score = ?, letter_grade = ?, ai_feedback_json = ?, plagiarism_score = ?, ai_likelihood = ?, status = 'graded', graded_at = CURRENT_TIMESTAMP 
+             WHERE id = ?`,
+            [finalScore, letterGrade, feedbackJson, plagScore, plagScore, sub.id]
+          );
+
+          gradedResults.push({
+            submissionId: sub.id,
+            studentName: sub.student_name,
+            score: finalScore,
+            letterGrade,
+            feedback: gradeReport
+          });
+        } catch (e) {
+          console.error('Error grading student submission:', sub.id, e.message);
+        }
+      }
+
+      res.json({
+        success: true,
+        totalGraded: gradedResults.length,
+        results: gradedResults,
+        message: `Successfully batch-graded ${gradedResults.length} student submissions!`
+      });
+    });
+  });
+});
+
+// 7. COHORT RISK & RETENTION ANALYTICS
+app.get('/api/enterprise/analytics/cohort/:class_id', authenticateToken, (req, res) => {
+  const classId = req.params.class_id;
+
+  db.all(
+    `SELECT s.id, s.student_id, s.student_name, s.score, s.plagiarism_score, s.letter_grade 
+     FROM class_submissions s 
+     JOIN class_assignments a ON s.assignment_id = a.id 
+     WHERE a.class_id = ?`,
+    [classId],
+    (err, rows) => {
+      if (err) return res.status(500).json({ error: 'Database error fetching cohort analytics' });
+      const analytics = calculateCohortRisk(rows || []);
+      res.json({ success: true, classId, analytics });
+    }
+  );
+});
+
+// 8. LMS QTI 2.1 & MOODLE XML EXPORT
+app.post('/api/enterprise/export/lms', optionalAuthenticateToken, (req, res) => {
+  const { title, lmsType, questions } = req.body;
+  if (!questions || !Array.isArray(questions)) {
+    return res.status(400).json({ error: 'questions array is required' });
+  }
+
+  const exportType = (lmsType || 'canvas').toLowerCase();
+  let exportContent = '';
+  let contentType = 'application/xml';
+  let fileExtension = 'xml';
+
+  if (exportType === 'moodle') {
+    exportContent = generateMoodleXml(title, questions);
+  } else {
+    // Canvas & Blackboard use standard IMS QTI 2.1
+    exportContent = generateQtiXml(title, questions);
+  }
+
+  if (req.user) {
+    db.run(
+      'INSERT INTO lms_exports (user_id, tool_name, lms_type, export_title, payload_json) VALUES (?, ?, ?, ?, ?)',
+      [req.user.id, 'qgen', exportType, title || 'Assessment Export', JSON.stringify({ questionCount: questions.length })]
+    );
+  }
+
+  res.json({
+    success: true,
+    lmsType: exportType,
+    fileName: `${(title || 'aethera_assessment').toLowerCase().replace(/\s+/g, '_')}_${exportType}.${fileExtension}`,
+    contentType,
+    xmlData: exportContent
+  });
+});
+
+// 9. INSTITUTIONAL ROI & SAVINGS CALCULATOR
+app.get('/api/enterprise/roi-calculator', (req, res) => {
+  const studentsCount = Number(req.query.students) || 5000;
+  const professorsCount = Number(req.query.professors) || 150;
+  const avgHourlyFacultyCost = Number(req.query.hourlyCost) || 45;
+
+  const roi = calculateInstitutionalROI({ studentsCount, professorsCount, avgHourlyFacultyCost });
+  res.json({ success: true, roi });
 });
 
 // ── Static Files & Catch-All Frontend ──

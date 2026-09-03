@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  .wrapper {
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 15px;
+    width: 100%;
+    max-width: 1050px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-bottom: 4px;
+    text-align: left;
+  }
+  .desc {
+    font-size: 13px;
+    color: #334155;
+    margin-bottom: 12px;
+    text-align: left;
+    font-weight: 500;
+  }
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+
+</head>
+<body>
+  <div class="wrapper">
+    <div class="title">[1] Context Diagram</div>
+    <div class="desc">Defines system boundaries and external entity interactions with the Aethera Platform.</div>
+    <svg viewBox="0 0 900 450" xmlns="http://www.w3.org/2000/svg">
+          <!-- Outer Box System Boundary -->
+          <rect x="260" y="80" width="380" height="300" rx="16" fill="#f1f5f9" stroke="#2563eb" stroke-width="3" />
+          <text x="450" y="120" text-anchor="middle" fill="#1e3a8a" font-weight="bold" font-size="20">Aethera Platform (System Boundary)</text>
+          <text x="450" y="145" text-anchor="middle" fill="#475569" font-size="13" font-weight="600">AI Academic Suite & Learning Manager</text>
+
+          <!-- System Subcomponents inside Boundary -->
+          <rect x="290" y="180" width="150" height="70" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="2" />
+          <text x="365" y="215" text-anchor="middle" fill="#0f172a" font-size="14" font-weight="bold">SPA Front-End</text>
+          <text x="365" y="235" text-anchor="middle" fill="#334155" font-size="11" font-weight="600">Client UI & Parsers</text>
+
+          <rect x="465" y="180" width="150" height="70" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="2" />
+          <text x="540" y="215" text-anchor="middle" fill="#0f172a" font-size="14" font-weight="bold">Express Backend</text>
+          <text x="540" y="235" text-anchor="middle" fill="#334155" font-size="11" font-weight="600">REST API Gateway</text>
+
+          <!-- External Entities -->
+          <!-- Student User -->
+          <rect x="30" y="180" width="160" height="80" rx="10" fill="#e0e7ff" stroke="#4338ca" stroke-width="2" />
+          <text x="110" y="215" text-anchor="middle" fill="#1e1b4b" font-weight="bold" font-size="15">Student / User</text>
+          <text x="110" y="240" text-anchor="middle" fill="#3730a3" font-size="12" font-weight="bold">[Primary Actor]</text>
+
+          <!-- Groq AI Cloud -->
+          <rect x="710" y="70" width="160" height="80" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="2" />
+          <text x="790" y="105" text-anchor="middle" fill="#312e81" font-weight="bold" font-size="15">Groq Cloud AI</text>
+          <text x="790" y="130" text-anchor="middle" fill="#4c1d95" font-size="12" font-weight="bold">Llama 3.3 70B API</text>
+
+          <!-- Notion API -->
+          <rect x="710" y="190" width="160" height="80" rx="10" fill="#d1fae5" stroke="#059669" stroke-width="2" />
+          <text x="790" y="225" text-anchor="middle" fill="#064e3b" font-weight="bold" font-size="15">Notion API</text>
+          <text x="790" y="250" text-anchor="middle" fill="#047857" font-size="12" font-weight="bold">Workspace Sync</text>
+
+          <!-- Storage / DB -->
+          <rect x="710" y="310" width="160" height="80" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2" />
+          <text x="790" y="345" text-anchor="middle" fill="#451a03" font-weight="bold" font-size="15">SQLite / Supabase</text>
+          <text x="790" y="370" text-anchor="middle" fill="#78350f" font-size="12" font-weight="bold">Database Persistence</text>
+
+          <!-- Arrows & Connections -->
+          <line x1="190" y1="210" x2="260" y2="210" stroke="#4338ca" stroke-width="2" />
+          <text x="225" y="200" text-anchor="middle" fill="#1e1b4b" font-size="11" font-weight="bold">Prompts / Files</text>
+          <line x1="260" y1="230" x2="190" y2="230" stroke="#4338ca" stroke-width="2" stroke-dasharray="4,4" />
+          <text x="225" y="245" text-anchor="middle" fill="#1e1b4b" font-size="11" font-weight="bold">Summaries / Results</text>
+
+          <line x1="640" y1="180" x2="710" y2="120" stroke="#6d28d9" stroke-width="2" />
+          <text x="685" y="140" text-anchor="middle" fill="#4c1d95" font-size="11" font-weight="bold">AI Requests</text>
+
+          <line x1="640" y1="230" x2="710" y2="230" stroke="#059669" stroke-width="2" />
+          <text x="675" y="220" text-anchor="middle" fill="#064e3b" font-size="11" font-weight="bold">Page Exports</text>
+
+          <line x1="640" y1="280" x2="710" y2="330" stroke="#d97706" stroke-width="2" />
+          <text x="685" y="315" text-anchor="middle" fill="#78350f" font-size="11" font-weight="bold">CRUD Sync</text>
+        </svg>
+  </div>
+</body>
+</html>

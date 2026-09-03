@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  .wrapper {
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 15px;
+    width: 100%;
+    max-width: 1050px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-bottom: 4px;
+    text-align: left;
+  }
+  .desc {
+    font-size: 13px;
+    color: #334155;
+    margin-bottom: 12px;
+    text-align: left;
+    font-weight: 500;
+  }
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+
+</head>
+<body>
+  <div class="wrapper">
+    <div class="title">[5] State Machine Diagram</div>
+    <div class="desc">Models behavioral state transitions of the Aethera platform session life cycle.</div>
+    <svg viewBox="0 0 850 480" xmlns="http://www.w3.org/2000/svg">
+          <!-- Initial State -->
+          <circle cx="80" cy="240" r="14" fill="#2563eb" />
+          <line x1="94" y1="240" x2="150" y2="240" stroke="#475569" stroke-width="2" />
+
+          <!-- State 1: IDLE -->
+          <rect x="150" y="210" width="110" height="60" rx="10" fill="#e0e7ff" stroke="#2563eb" stroke-width="2" />
+          <text x="205" y="245" text-anchor="middle" fill="#1e3a8a" font-size="14" font-weight="bold">IDLE</text>
+
+          <!-- Transition 1 -> 2 -->
+          <line x1="260" y1="240" x2="330" y2="240" stroke="#475569" stroke-width="2" />
+          <text x="295" y="230" text-anchor="middle" fill="#334155" font-size="11" font-weight="bold">Submit Prompt</text>
+
+          <!-- State 2: PROCESSING_API -->
+          <rect x="330" y="210" width="150" height="60" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="2" />
+          <text x="405" y="240" text-anchor="middle" fill="#312e81" font-size="13" font-weight="bold">PROCESSING_API</text>
+          <text x="405" y="255" text-anchor="middle" fill="#4c1d95" font-size="11" font-weight="bold">[Streaming Groq API]</text>
+
+          <!-- Transition 2 -> 3 Success -->
+          <line x1="480" y1="240" x2="570" y2="240" stroke="#059669" stroke-width="2" />
+          <text x="525" y="230" text-anchor="middle" fill="#064e3b" font-size="11" font-weight="bold">Stream End [200 OK]</text>
+
+          <!-- State 3: DISPLAY_RESULT -->
+          <rect x="570" y="210" width="140" height="60" rx="10" fill="#d1fae5" stroke="#059669" stroke-width="2" />
+          <text x="640" y="240" text-anchor="middle" fill="#064e3b" font-size="13" font-weight="bold">DISPLAY_RESULT</text>
+          <text x="640" y="255" text-anchor="middle" fill="#047857" font-size="11" font-weight="bold">[Rendered + Saved]</text>
+
+          <!-- State 4: ERROR_STATE -->
+          <rect x="330" y="80" width="150" height="50" rx="10" fill="#ffe4e6" stroke="#e11d48" stroke-width="2" />
+          <text x="405" y="110" text-anchor="middle" fill="#881337" font-size="13" font-weight="bold">ERROR_STATE</text>
+
+          <line x1="405" y1="210" x2="405" y2="130" stroke="#e11d48" stroke-width="2" />
+          <text x="415" y="175" fill="#881337" font-size="11" font-weight="bold">API Exception</text>
+
+          <line x1="330" y1="105" x2="205" y2="105" stroke="#475569" stroke-width="2" />
+          <line x1="205" y1="105" x2="205" y2="210" stroke="#475569" stroke-width="2" />
+          <text x="260" y="95" text-anchor="middle" fill="#334155" font-size="11" font-weight="bold">Reset / Retry</text>
+
+          <path d="M 640 270 Q 640 370 205 370 Q 205 370 205 270" fill="none" stroke="#475569" stroke-width="2" />
+          <text x="420" y="360" text-anchor="middle" fill="#334155" font-size="12" font-weight="bold">New Request Action</text>
+        </svg>
+  </div>
+</body>
+</html>

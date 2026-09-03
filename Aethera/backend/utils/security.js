@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const db = require('../db');
 
 // Encryption key derived or fallback
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || crypto.createHash('sha256').update(String(process.env.JWT_SECRET || 'mindspark-secret-key')).digest('base64').substring(0, 32);
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || crypto.createHash('sha256').update(String(process.env.JWT_SECRET || 'aethera-secret-key')).digest('base64').substring(0, 32);
 const IV_LENGTH = 16;
 
 /**
