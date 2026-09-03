@@ -201,7 +201,6 @@ http://localhost:34567
 ## 👨‍💻 Author & Credits
 
 - **Developer**: **Omar Saeed**
-- **Program**: **AI Ambassadors Program (Batch 8)**
 - **License**: Released under the **MIT License** — free for academic and educational usage worldwide.
 
 ---
