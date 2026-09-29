@@ -23,6 +23,6 @@
     "nodemailer": "^9.0.3",
     "pptxgenjs": "^4.0.1",
     "resend": "^6.17.2",
-    "sqlite3": "^6.0.1"
+    "sqlite3": "5.1.7"
   }
 }

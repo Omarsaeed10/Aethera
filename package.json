@@ -4,8 +4,8 @@
   "description": "Aethera University Edition — Full-Stack Academic AI Platform",
   "scripts": {
     "start": "node Aethera/backend/server.js",
-    "build": "npm --prefix Aethera/backend install",
-    "postinstall": "npm --prefix Aethera/backend install"
+    "build": "npm --prefix Aethera/backend install --production",
+    "postinstall": "npm --prefix Aethera/backend install --production"
   },
   "engines": {
     "node": "20.x"
