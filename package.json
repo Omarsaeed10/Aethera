@@ -1,0 +1,13 @@
+{
+  "name": "aethera-workspace",
+  "version": "1.0.0",
+  "description": "Aethera University Edition — Full-Stack Academic AI Platform",
+  "scripts": {
+    "start": "node Aethera/backend/server.js",
+    "build": "npm --prefix Aethera/backend install",
+    "postinstall": "npm --prefix Aethera/backend install"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
